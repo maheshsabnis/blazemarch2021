@@ -1,0 +1,93 @@
+<html>
+    <head>
+        <!--CSS References (inline CSS as well as external CSS files) External CSS are loaded during Window Load-->
+        <!--Media Settings e.g. Desktop / Modile browsers-->
+        <!--External JavaScript References (loaded before the Body loaded)-->
+        <!--Inline JavaScript (Loaded during the Window Loading but before the Body loads)-->
+        <script>
+            window.onload = function(){
+                // extract the button element based on 'id' and attach an event to it
+                var btnadd = document.getElementById('btnadd');
+                // attach event
+                // Parameter 1: The name of the event
+                // Parameter 2: The callback function that will be executed when an event is raised
+                // Parameter 3: A Boolean that specifies that if the event is released once it is dispatched
+                btnadd.addEventListener('click',function(){
+                    // read values entered in textboxes
+                    var n1 = document.getElementById('txtn1').value;
+                    var n2 = document.getElementById('txtn2').value;
+                    if(parseInt(n2) > parseInt(n1)) {
+                        document.getElementById('txtres').value = "cannot accept number 2 greater than number 1 "
+                    } else {
+                        var res = parseInt(n1) + parseInt(n2);
+                        // assign value to input element
+                        document.getElementById('txtres').value = res;
+                    }
+                },false);
+                console.log('Type of btnadd is = ' + typeof(btnadd));
+
+                document.getElementById('btnclear').addEventListener('click',function(){
+                    document.getElementById('txtn1').value = 0;
+                    document.getElementById('txtn2').value = 0;
+                    document.getElementById('txtres').value = 0;
+                },false);
+
+               
+            };
+            function readValue(v){
+                console.log('inline event is  = ' + v);
+            }
+        </script>
+    </head>
+    <body>
+        <!--We have the UI Elements i.e. UI of HTML Page-->
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        Number 1
+                    </td>
+                    <td>
+                        <input type="text" id="txtn1" value="0"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Number 2
+                    </td>
+                    <td>
+                        <input type="text" id="txtn2" value="0"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Result
+                    </td>
+                    <td>
+                        <input type="text" id="txtres" value="0"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" value="Add" id="btnadd">
+                    </td>
+                    <td>
+                        <input type="button" value="Clear" id="btnclear">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        Enter Name
+        <br>
+        <!--onkeyup is an event scoped currently for input element 
+          this.value means here 'this' is an input element
+          and this.value is 'value' property of input element i.e. value entered in the input element
+        -->
+        <input type="text" id="txtname" onkeyup="readValue(this.value);">
+
+
+        <!--Post Load inline JavaScript (executed after DOM is loaded (i.e. Body))-->
+        <!--External JavaScript References (executed after DOM is loaded (i.e. Body))-->
+    </body>
+</html>
