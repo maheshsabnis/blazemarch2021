@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <script>
+       var n1 = 100; // number
+       var n2 = "100"; // string
+       // The '==' will only parse values from left to right and check for equality by skipping types 
+       console.log(n1 == n2);// value equality, return true
+
+       // use  === , the parsing will be takes place from type and then to values
+       console.log(n1 === n2);// type equality and then value aka 'DEEP EQUALITY', return false
+
+       // using assignment statement
+
+       var x = 10;
+       console.log('x = ' + x);
+       var y = x;
+       console.log('After asigning x to y y = ' + y + '  x = ' + x);
+       y = 100;
+       console.log('After modifying y to 100  y = ' + y + '  x = ' + x);
+
+       // using assignment statement for Objects
+
+       var obj1 = {n:40};
+       console.log('obj1.n = ' + obj1.n);
+       var obj2 = obj1; // point to refer to same object
+       console.log('After assigning obj1 to obj2, obj2.n = ' + obj2.n + '  and obj1.n = ' + obj1.n);
+       
+       obj2.n = 1000;
+       console.log('After modifying obj2.n tp 1000 , obj2.n = ' + obj2.n + '  and obj1.n = ' + obj1.n);
+
+
+       // copy schema and data of one object to other object
+       // Parameter 1: the Target object that will be created (ganerally an empty object)
+       // Parameter 2: the object of ehich schema and data will be copied in target object
+       var obj3 = Object.assign({}, obj1);
+       console.log('After assigning obj1 to obj3, obj3.n = ' + obj3.n + '  and obj1.n = ' + obj1.n);
+       obj3.n = 600;
+       console.log('After modifying obj3.n to 600 , obj3.n = ' + obj3.n + '  and obj1.n = ' + obj1.n);
+   </script>
+</head>
+<body>
+    <h2>JS Operators</h2>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.onload = function(){
+            var x;
+            x = 10;
+            console.log('type of x = ' + typeof(x) + ' and value of x = ' + x);
+            x = "JavaScript";
+            console.log('type of x = ' + typeof(x) + ' and value of x = ' + x);
+            x = 10.89;
+            console.log('type of x = ' + typeof(x) + ' and value of x = ' + x);
+            x = true;
+            console.log('type of x = ' + typeof(x) + ' and value of x = ' + x);
+            x = [10,20,30];
+            console.log('type of x = ' + typeof(x) + ' and value of x = ' + x);
+            x = new Date(01,03,2021);
+            console.log('type of x = ' + typeof(x) + ' and value of x = ' + x);
+            x = {id:101,name:'Mahesh'}; // JSON aka literal
+            console.log('type of x = ' + typeof(x) + ' and value of x = ' + x);
+
+            var a = 10; // number
+            var b = "123ABC"; // string
+
+            var add1 = a + b; // a is number, b is string, so + will be used for concatination by parsting expression to string
+            console.log(add1); // result = 10123ABC
+            var sub1 = a - b; // the - sign is purely used for numeric operations
+            console.log(sub1); // result = NaN
+
+            var add2 = a + parseInt(b); // since b starts from number, the parser will parse numebr data untill the first character
+                                        // parseInt(b) , will be 123
+            console.log(add2);                            
+            var c = "100.78asd";
+            console.log(parseFloat(c));
+
+            var add3 = 100+200;
+            var str1 = add3.toString(); // converting the object into the string
+            console.log('Result add3 = '+ add3 + ' type of add3 = ' + typeof(add3));
+            console.log('Result str1 = '+ str1 + ' type of str1 = ' + typeof(str1));
+
+            var n1 = 5;
+            var n2 = 2;
+
+            var res =  n1 / n2; // result  = 2.5
+            console.log('Result of n1/n2 = ' + res);
+
+            var res1 = parseInt(n1/n2); // result will be parse as integet and will skip the floating point
+                                        // result will be 2
+            console.log('Result of patseInt(n1/n2) = ' + res1);
+
+            var n3 = 5;
+            var n4 = 7;
+            var res2 = parseFloat(n3/n4); // same as n3/n4 without parsing
+            console.log('Result of n3/n4 = ' + res2);
+
+        }
+    </script>
+</head>
+<body>
+    <h2>The JavaScript Types</h2>
+</body>
+</html>

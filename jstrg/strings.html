@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.onload = function(){
+        var str = "The JavaScript is dynamic but powerful programming language. The JavaScript is used for fullstack development";
+        console.log(str.length);
+        document.getElementById("dv").innerText = str;
+        document.getElementById("dvl").innerText = str.length;
+        document.getElementById("dvucase").innerText = str.toUpperCase();
+        document.getElementById("dvlcase").innerText = str.toLocaleLowerCase();
+        // get the first occcurance of the Word 'JavaScript'
+        document.getElementById("dvfoc").innerText = str.indexOf('JavaScript');
+        // if the match not found then indexOf and lastIndexOf will return -1
+        console.log('Index of "ep" = ' + str.indexOf("ep"));
+        // get the last occcurance of the Word 'JavaScript'
+        document.getElementById("dvfoc").innerText = str.lastIndexOf('JavaScript');
+
+        // ask the indexOf() and lastIndexOf() to search  from spoefic position of the string
+        console.log(str.indexOf("is", 60));
+
+        // slicing of the string, start readign from postion 30 to position 39
+        console.log('slice ' + str.slice(30, 40));
+    }
+    </script>
+</head>
+<body>
+    <h1>String Methods</h1>
+    <div id="dv"></div>
+    <br>
+    <div id="dvl"></div>
+    <br>
+    <div id="dvucase"></div>
+    <br>
+    <div id="dvlcase"></div>
+    <br>
+    <div id="dvfoc"></div>
+    <br>
+    <div id="dvloc"></div>
+</body>
+</html>
