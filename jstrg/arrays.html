@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.onload = function(){
+            var numbers = [10,20,2,4,6,9,8,7,3,1,11,13,12,16,15,14];
+            for(var i=0;i<numbers.length;i++) {
+                document.getElementById('dvarr1').innerHTML += numbers[i] + ' ';
+            }
+            // push a single element
+            numbers.push(18);
+            for(var i=0;i<numbers.length;i++) {
+                document.getElementById('dvarr2').innerHTML += numbers[i] + ' ';
+            }
+            // remove the top element in array (right-most) 
+            numbers.pop();
+            for(var i=0;i<numbers.length;i++) {
+                document.getElementById('dvarr3').innerHTML += numbers[i] + ' ';
+            }
+            // pushing multiple values
+            numbers.push(21,22,23);
+            for(var i=0;i<numbers.length;i++) {
+                document.getElementById('dvarr4').innerHTML += numbers[i] + ' ';
+            }
+            // remove value from right of the array
+            // the number will be returned
+            var x = numbers.shift();
+            console.log('Removed value is = ' + x);
+            for(var i=0;i<numbers.length;i++) {
+                document.getElementById('dvarr5').innerHTML += numbers[i] + ' ';
+            }
+
+            // add a new element to the lefht most (first) position in array
+            numbers.unshift(100);
+            for(var i=0;i<numbers.length;i++) {
+                document.getElementById('dvarr6').innerHTML += numbers[i] + ' ';
+            }
+            // print elements with its indices
+            for(var i=0;i<numbers.length;i++) {
+                document.getElementById('dvarr7').innerHTML += 'idx = '+ i + ' is = ' +numbers[i] + ', ';
+            }
+            // replacing element at specific index
+            numbers[5] = 90;
+            for(var i=0;i<numbers.length;i++) {
+                document.getElementById('dvarr8').innerHTML += 'idx = '+ i + ' is = ' +numbers[i] + ', ';
+            }
+
+            // dynamically adding elements in an array using 'splice'
+            // parameter 1 : the index from where adding of elements starts
+            // parameter 2 : the number of elements to be removed 
+            // parameter 3 : the elements to be added in the array 
+            numbers.splice(2,0,1000,2000);
+            // from 2nd index add 1000,2000 in array without removing any elements
+            for(var i=0;i<numbers.length;i++) {
+                document.getElementById('dvarr9').innerHTML += 'idx = '+ i + ' is = ' +numbers[i] + ', ';
+            }
+            numbers.splice(2,1,3000,4000);
+            // 1000 is replaced by 3000 and 4000 is newly added in array
+            for(var i=0;i<numbers.length;i++) {
+                document.getElementById('dvarr10').innerHTML += 'idx = '+ i + ' is = ' +numbers[i] + ', ';
+            }
+
+            // other uses of splice() 
+            // using splice() to remove elements
+            numbers.splice(0,10);
+            //  from 0 th position remove 10 elements
+            for(var i=0;i<numbers.length;i++) {
+                document.getElementById('dvarr11').innerHTML += 'idx = '+ i + ' is = ' +numbers[i] + ', ';
+            }
+
+            var a1 = ["Mahesh","Vikram"];
+            var a2 = ["Subodh","Suprotim"];
+            var a3 = ["Manish","Deepak"];
+            // merge a2 into a1
+            var a4 = a1.concat(a2); 
+            for(var i=0;i<a4.length;i++) {
+                document.getElementById('dvarr12').innerHTML += a4[i];
+            }
+            // merge a2 and a3 into a1
+            var a5 = a1.concat(a2,a3);
+            for(var i=0;i<a5.length;i++) {
+                document.getElementById('dvarr13').innerHTML += a5[i];
+            }
+
+            // break array based on start position and count
+            var a6 = a5.slice(0,3);
+            console.log(a6);
+            // sort the string by aplhabetical order    
+            console.log(a5.sort());
+              // reverse the string by aplhabetical order    
+            console.log(a5.reverse())
+
+            numbers = [10,20,2,4,6,9,8,7,3,1,11,13,12,16,15,14,19];
+            console.log(numbers.sort()); // 1, 10, 11, 12, 13, 14, 15, 16, 19, 2, 20, 3, 4, 6, 7, 8, 9
+            console.log(numbers.reverse()); // 9, 8, 7, 6, 4, 3, 20, 2, 19, 16, 15, 14, 13, 12, 11, 10, 1
+
+            // using the compare function
+            function sortValues(a,b){
+                return a - b;
+            }
+            function reverseValues(a,b){
+                return b - a;
+            }
+            // the callback function
+            console.log(numbers.sort(sortValues)); // [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19, 20]
+            console.log(numbers.reverse(reverseValues)); // [20, 19, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 4, 3, 2, 1]
+        }
+     
+    </script>
+</head>
+<body>
+    <h1>The Array Methods</h1>
+    <div id='dvarr1'></div>
+    <br>
+    <div id='dvarr2'></div>
+    <br>
+    <div id='dvarr3'></div>
+    <br>
+    <div id='dvarr4'></div>
+    <br>
+    <div id='dvarr5'></div>
+    <br>
+    <div id='dvarr6'></div>
+    <br>
+    <div id='dvarr7'></div>
+    <br>
+    <div id='dvarr8'></div>
+    <br>
+    <div id='dvarr9'></div>
+    <br>
+    <div id='dvarr10'></div>
+    <br>
+    <div id='dvarr11'></div>
+    <br>
+    <div id='dvarr12'></div>
+    <br>
+    <div id='dvarr13'></div>
+</body>
+</html>
