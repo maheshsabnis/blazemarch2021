@@ -39,6 +39,13 @@
         
 
 
+        const datesrc = new Date('7/13/2010');
+const datetgt = new Date('12/15/2010');
+const diffTime = Math.abs(datesrc - datetgt);
+const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+console.log(diffTime + " milliseconds");
+console.log(diffDays + " days");
+
     </script>
 </head>
 <body>

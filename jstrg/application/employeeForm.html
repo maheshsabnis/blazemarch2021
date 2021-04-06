@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./employeeFormLogic.js"></script>
+    <script src="./validate.js"></script>
+    <script>
+        var empLogic;
+        var employees;
+        var validate;
+        function presenter(){
+            empLogic = new EmployeeLogic();
+            validate = new ValidateForm(); 
+            var depts = empLogic.departments;
+            loadList(depts);
+            document.getElementById('btnclear').addEventListener('click',clearInputs,false);
+            employees = empLogic.getEmployees();
+            document.getElementById('dvemps').innerHTML = JSON.stringify(employees);
+            document.getElementById('btnsave').addEventListener('click',save,false);
+            document.getElementById('txteno').addEventListener('keyup', function(){
+                // pass the value entered in input element 
+                validate.checkNumeric(this.value)
+            },false);
+
+            document.getElementById('txtsal').addEventListener('keyup', function(){
+                // pass the value entered in input element 
+                validate.checkNumeric(this.value)
+            },false);
+
+        };
+        // function to load all departments
+        function loadList(depts){
+            var opt;
+            for(var i=0; i< depts.length; i++) {
+                opt+= '<option value="'+depts[i]+ '">'+ depts[i] +'</option>';    
+            }
+            // generate options dynamically
+            document.getElementById('lstdname').innerHTML = opt;
+        }
+        // reading all inputes and clearijg them
+        function clearInputs(){
+            var inputs =  document.getElementsByTagName('input');
+            for(var i=0; i< inputs.length; i++) {
+                inputs[i].value = "";
+            }
+        }
+        // the save oepration
+        function save(){
+            // Object Literal
+            var emp = {
+                EmpNo: parseInt(document.getElementById('txteno').value),
+                EmpName:  document.getElementById('txtename').value,
+                DeptName: document.getElementById('lstdname').value,
+                Salary:parseInt(document.getElementById('txtsal').value)
+            };
+            employees = empLogic.addEmployee(emp); 
+            document.getElementById('dvemps').innerHTML = JSON.stringify(employees);
+        }
+        window.onload = presenter;
+    </script>
+</head>
+<body>
+    <h2>The Employee Information System</h2>
+    <table>
+        <tbody>
+            <tr>
+                <td>EmpNo</td>
+                <td>
+                    <input type="text" id="txteno">
+                </td>
+            </tr>
+            <tr>
+                <td>EmpName</td>
+                <td>
+                    <input type="text" id="txtename">
+                </td>
+            </tr>
+            <tr>
+                <td>DeptName</td>
+                <td>
+                    <select  id="lstdname">
+                        <option value="1">A</option>
+                        <option value="2">B</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Salary</td>
+                <td>
+                    <input type="text" id="txtsal">
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                    <button id="btnclear">Clear</button>
+                </td>
+                <td>
+                    <button id="btnsave">Save</button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <hr>
+    <div id="dvemps"></div>
+</body>
+</html>
