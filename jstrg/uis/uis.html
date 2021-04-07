@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./uis.js"></script>
+    <script>
+        function load(){
+            var depts = ["IT", "HRD", "SALES","ACCOUNTS"];
+            var dynamicUI = new generateUI();
+            document.getElementById('lst1').innerHTML = dynamicUI.select(depts);
+            var categories = ["ECT","ECT","FOD"];
+            document.getElementById('lst2').innerHTML = dynamicUI.select(categories);
+            var employees = [  
+                {EmpNo:101, EmpName:"Mahesh", DeptName:"IT", Salary:80000},
+                {EmpNo:102, EmpName:"Tejas", DeptName:"SALES", Salary:60000}
+            ];
+            document.getElementById('dvtable').innerHTML = dynamicUI.table(employees);
+
+            var categoriesData = [
+             {CategoryId:"Cat001", CategoryName:"ECT", Price:1000},
+             {CategoryId:"Cat002", CategoryName:"ECL", Price:1100},
+             {CategoryId:"Cat003", CategoryName:"FOD", Price:500},
+             {CategoryId:"Cat004", CategoryName:"CVL", Price:8000},
+             {CategoryId:"Cat005", CategoryName:"MEH", Price:1000}
+            ];
+            document.getElementById('dvtable1').innerHTML = dynamicUI.table(categoriesData);
+        }
+        window.onload = load;
+    </script>
+</head>
+<body>
+    <h2>Repeated Lists</h2>
+    <select id="lst1"></select>
+    <hr><hr><hr>
+    <select id="lst2"></select>
+    <hr><hr><hr>
+    <div id="dvtable"></div>
+    <hr><hr><hr>
+    <div id="dvtable1"></div>
+</body>
+</html>

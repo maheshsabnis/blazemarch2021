@@ -196,6 +196,17 @@ var obj = {
                 - They can be easily extended using 'prototype' (like inheritence of OOPs but not officially in JS)
                     - This allos to enhance the existing ref function by adding new logic / function inside it
                         - This is generally followed as a practice when the ref functions are distributed as libraries across projects in an organization   
+            - Close Functions
+                - These are function objects those are used as JS type (aka class)
+                - This funciton 'MUST RETURN' a 'JSON TYPE' so that it can be used as class
+                    - JSON Type
+                        - Literal with Key/Value pair
+                    - All keys inside the JSON type will be public   
+                - This is like final class (can be extended with prototype) 
+            - Immediately Invocable Function Expression (IIFE)
+                - Self-Invocable function
+                - Self-Executable function
+                - They are loaded in DOM befor the DOM is intialize                       
         - boolean
         - date
     - reading values from the Element 

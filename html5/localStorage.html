@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.onload = function(){
+            var person = {
+                PersonId:0,
+                FirstName:'',
+                LastName: '',
+                JoiningDate:new Date(),
+                Salary:0
+            };
+            document.getElementById('btnsave').addEventListener('click',function(){
+                person.PersonId = document.getElementById('txtpid').value;
+                person.FirstName = document.getElementById('txtfname').value;
+                person.LastName = document.getElementById('txtlname').value;
+                person.JoiningDate = document.getElementById('dtjoin').value;
+                person.Salary = parseInt(document.getElementById('txtsal').value);
+             
+                // save data in localStorage
+                localStorage.setItem('Person-' + person.PersonId, JSON.stringify(person));
+            },false);
+
+            document.getElementById("btnclear").addEventListener('click',function(){
+                document.getElementById('txtpid').value = 0;
+                document.getElementById('txtfname').value = '';
+                document.getElementById('txtlname').value = '';
+                document.getElementById('dtjoin').value = new Date();
+                document.getElementById('txtsal').value = 0;
+            },false);
+
+            document.getElementById('btnload').addEventListener('click',function(){
+            
+                var data = [];
+                
+                for(var i=1; i< localStorage.length;i++) {
+                    data.push(localStorage.getItem('Person-'+i));
+                }
+
+                document.getElementById('dvData').innerHTML = JSON.stringify(data);
+            },false);
+
+            document.getElementById('btndelete').addEventListener('click',function(){
+                localStorage.clear(); // clear the storage
+               // localStorage.removeItem(); // delete item for specific key
+            },false);
+        }
+    </script>
+</head>
+<body>
+    <h1>Demo Local Storage</h1>
+    <div>
+        <label>Person Id</label>
+        <input type="number" id="txtpid">
+    </div>
+    <div>
+        <label>First Name</label>
+        <input type="text" id="txtfname">
+    </div>
+    <div>
+        <label>Last Name</label>
+        <input type="text" id="txtlname">
+    </div>
+    <div>
+        <label>Date of Join</label>
+        <input type="date" id="dtjoin">
+    </div>
+    <div>
+        <label>Salary</label>
+        <input type="number" id="txtsal">
+    </div>
+    <div>
+        <input type="button" value="Save" id="btnsave">
+        <input type="button" value="Load" id="btnload">
+        <input type="button" value="Clear" id="btnclear">
+        <input type="button" value="Delete" id="btndelete">
+    </div>
+    <hr>
+    <div id="dvData"></div>
+</body>
+</html>

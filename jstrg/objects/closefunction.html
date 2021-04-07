@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./closefunciton.js"></script>
+    <script>
+        function load(){
+            var obj = new StringUtilities('JavaScript is Great');
+            document.getElementById('dvlength').innerHTML = obj.getLength();
+            document.getElementById('dvreverse').innerHTML = obj.reverse();
+            document.getElementById('dvparam').innerHTML = obj.param;
+            // instantiate the inner object using the private object
+            // new obj.privateObj(); will return an instance of innerobject
+            var privateObj = new obj.privateObj();
+            document.getElementById('dvupper').innerHTML = privateObj.changeCase();
+        }
+        window.onload = load;
+    </script>
+</head>
+<body>
+    <h1>The Close Function</h1>
+    <div id="dvlength"></div>
+    <hr>
+    <div id="dvreverse"></div>
+    <hr>
+    <div id="dvparam"></div>
+    <hr>
+    <div id="dvupper"></div>
+</body>
+</html>
