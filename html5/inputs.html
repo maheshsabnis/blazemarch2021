@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.onload = function(){
+            
+            var inputes = document.getElementsByTagName('input');
+
+            for(var i=0;i< inputes.length;i++) {
+                inputes[i].addEventListener('change',function(){
+                    console.log(this.value);
+
+                    document.getElementById("dv").style.backgroundColor = this.value;
+                },false);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>The HTML 5 Input Elements (New)</h1>
+    date: <input type="date" id="dt">
+    <br>
+    month: <input type="month" id="mn">
+    <br>
+    week: <input type="week"  id="wk">
+    <br>
+    color: <input type="color" id="col">
+    <br>
+    range: <input type="range"  id="rng" min="0" max="500">
+    <br>
+    time: <input type="time" id="tm">
+    <br>
+    name: <input type="text" placeholder="Enter Name">
+    <br>
+    <div id="dv">
+        This div for Message
+    </div>
+</body>
+</html>

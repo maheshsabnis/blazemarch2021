@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // global declarations
+        var mydb; // for database reference
+        var transaction; // for transaction reference
+        var tbl; // for ObjectStore reference
+        function createDatabase(){
+            // create database if not exist and open it else open it and also define version for it
+            mydb = window.indexedDB.open("InfoDB", 1);
+
+            // if the database is open then upgrade the database for creating the ObjectStore
+            mydb.onupgradeneeded = function(e){
+                // the 'e' represent the IDBOpenRequest object 
+                // this will provide an access to the 'indexedDB' reference (remember Object Equality with assignent)
+                // dbRef is the database reference, if this is changed, then the 'mydb' will also be be changed
+                var dbRef = e.target.result; 
+                // crete an object store
+                tbl = dbRef.createObjectStore('Info', {keyPath: "id"});
+                // define the column constraints
+                var columnConstraints = {unique:false};
+                // defining coluns
+                // parameter 1: the actual column name
+                // parameter 2: the developer friendy column name
+                // parameter 3: the column constraints
+                tbl.createIndex("RowId1","RowId",columnConstraints);
+                tbl.createIndex("Name1","Name",columnConstraints);
+                tbl.createIndex("City1","City",columnConstraints);
+
+                document.getElementById('dvstatus').innerHTML += 'Database is created successfully with objectstore';
+
+            };
+            // subscribe to the success event 
+            mydb.onsuccess = function(e){
+                document.getElementById('dvstatus').innerHTML += 'Database is created successfully';
+            };
+            // for error
+            mydb.onerror = function(e){
+                document.getElementById('dvstatus').innerHTML += 'Database creation failed';
+            }
+
+        };
+
+        function load(){
+            createDatabase();
+
+            document.getElementById('btnsave').addEventListener('click',saveData,false);
+            document.getElementById('btnclear').addEventListener('click',clearInputs,false);
+            document.getElementById('btnloaddata').addEventListener('click',loadData,false);
+            document.getElementById('btndeletedatabase').addEventListener('click', deleteDatabase,false);
+        };
+
+        function deleteDatabase(){
+            var delRequest = window.indexedDB.deleteDatabase("InfoDB");
+            delRequest.onsuccess = function(){
+                document.getElementById('dvstatus').innerHTML += 'Database is deleted successfully..';
+            }
+        };
+
+        function saveData(){
+            // get the indexedDB Database Reference
+            mydb = window.indexedDB.open("InfoDB");
+            // subscribe to onsuccess and perform operations
+            if(mydb){
+                mydb.onsuccess=function(e){
+                    // retrive the transaction object for the database and point the transaction to ObjectStore
+                    // this transactions can be 'read', 'readwrite', 'write'
+
+                    var tx = e.target.result.transaction("Info", "readwrite");
+                    // get the ObjectStore which is set for transaction
+                    // making the ObjectStore ready for the transaction
+                    tbl = tx.objectStore("Info");
+
+                    // read values from UI
+                    var objectToStore = {
+                        "id":parseInt(document.getElementById("tid").value),
+                        "RowId":parseInt(document.getElementById("tid").value),
+                        "Name": document.getElementById("tname").value,
+                        "City": document.getElementById("tcity").value
+                    };
+
+                    // pass the object to the add() method
+                    var saveOperations = tbl.add(objectToStore);
+
+                    // for update operations
+                    // tbl.put(objectToUpdate);
+                    // for delete operations
+                    // tbl.delete(id)
+
+                    // subscribe to success on operations
+                    saveOperations.onsuccess = function(e){
+                        document.getElementById('dvstatus').innerHTML += 'Data Saved Successfully ' + e.target.result;
+                    };
+                    // subscribe to error on operations
+                    saveOperations.onerror = function(e){
+                        document.getElementById('dvstatus').innerHTML += 'Data Saved failed ' + e.target.value;
+                    };
+
+                }    
+            }else {
+                document.getElementById('dvstatus').innerHTML += 'Error in Save Operation, may be database is not open';
+            }
+        };
+
+        function loadData(){
+            var records = [];
+            mydb = window.indexedDB.open("InfoDB");
+            if(mydb){
+                mydb.onsuccess=function(e){
+                    // retrive the transaction object for the database and point the transaction to ObjectStore
+                    // this transactions can be 'read', 'readwrite', 'write'
+
+                    var tx = e.target.result.transaction("Info", "readwrite");
+                    // get the ObjectStore which is set for transaction
+                    // making the ObjectStore ready for the transaction
+                    tbl = tx.objectStore("Info");
+
+                    tx.oncomplete = function(){
+                        // write logic to show data on UI
+                        document.getElementById('dvstatus').innerHTML += 'Reaced data from IndexedDB <hr>' + JSON.stringify(records);
+
+                    }    
+
+                    // setting the cursor
+                    // tbl.openCursor({Conditions}); // e.g. {City:'Pune'}
+                    // this is async method so  ake sure that
+                    // the transaction object is have the transaction complete subscription
+                    // before opening the cursor
+                    // e.g. to read data based on id
+                    // tbl.openCursor(id)
+                    var readCursor = tbl.openCursor();
+
+                    // if the read operation is successful then subscribe to onsuccess else to onerror
+                    // once onsuccess / onerror compltes it will complete the transaction
+                    readCursor.onsuccess = function(e){
+                        // e is the object that holds records
+                        var reader = e.target.result;
+                        if(reader){
+                            records.push(reader.value);
+                            reader.continue();
+                        }
+                    };
+                    readCursor.onerror = function(e){
+                        document.getElementById('dvstatus').innerHTML += 'read operation failed';
+                    };
+
+                    
+                }    
+            }else {
+                document.getElementById('dvstatus').innerHTML += 'Error in Save Operation, may be database is not open';
+            }
+        };
+
+        function clearInputs(){};
+
+        window.onload = load;
+    </script>
+</head>
+<body>
+    <h1>HTML 5 IndexedDB</h1>
+    <div>
+        Id: <input type="text" id="tid">
+    </div>
+    <br>
+    <div>
+        Name: <input type="text" id="tname">
+    </div>
+    <br>
+    <div>
+        City: <input type="text" id="tcity">
+    </div>
+    <br>
+    <div>
+        <input type="button" value="Save" id="btnsave">
+        <input type="button" value="Load Data" id="btnloaddata">
+        <input type="button" value="Clear" id="btnclear">
+        <input type="button" value="Delete Database" id="btndeletedatabase">
+    </div>
+    <hr>
+    <div id="dvstatus"></div>
+</body>
+</html>

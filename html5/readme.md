@@ -34,7 +34,45 @@
             - methods
                 - sessionStorage.set() / get() / clear(), etc.
         - indexedDB
+            - Tabular form of database
+            - Create a Database in browser
+                - IDBDatabase
+                    - Represent the Database Connection
+                    - Transactions will be performed only when conneciton is established
+                    - This uses IDBEnvironment and IDBFactory interfaces internally
+                - IDBEnvironment
+                    - Provides an access to IndexedDB using window object
+                - IDBFactory
+                    - Provides acced to database to the application   
+                - IDBOpenRequest
+                    - Request the Database to be opened for 
+                        - creating ObjectStore
+                            - Performing CRUD operations
+                    - All these are Async Operations e.g. Creating the Database, ObjectStore and Transactions
+                        - Events
+                            - onsuccess
+                            - onerror
+                            - oncomplete
+                - IDBCursor
+                    - Iterate over all records in ObjectStore
+                - IDBTransaction
+                    - Monitor and Manage all transactions on ObjectStore
+                        - add() , put(), delete(), opencursor()                              
 2. Drag-Drop
+    - Dynmaic UI Updates in DOM / Browser
+    - Mouse Events linked with Drag-Drop Operations
+        - dragstart
+            - An event that will attach the DOM element with Mouse LeftButton Down event
+            - Will detach the DOM element from DOM Tree and make it ready for movement
+            - This event accept the 'DragEvent' as input parameter, this provides an access to the 'dataTransfer' object that contains the metadata of the element to be dragged
+        - dragover
+            - Control the Mouse Movements with LeftButton Down and DOM element attach to across all its movements on browser      
+                - prevent any other operations on browser
+                    - preventDefault()
+        - drop
+            - Capture Mouse LeftButton Release event and release DOM element from it and show (or append) at new position on browser   
+            - This event accept the 'DragEvent' object, that will use the 'dataTransfer' object to receive the dragged element's data   
+    - To make an element enable for drag-drop, set its 'draggable' attriobute to 'true'        
 3. Media Services
 
 
@@ -54,3 +92,8 @@
 - Create a Radio-Button list for Categories and Manufactirers 
     - Input type="radio", same name of arr radio button
 
+# Date 08-April-2021
+
+Create a HTML Page that will show a Table that contains the Products Information with products properties give in Exercise of Dat 07-Apri-2021.
+
+The End-Use will be able to drag the row from the table of Product information and drop it in the table of Product Cart table. THe moment the row is dropped the Product Cart table must show the total proce of the selected products and the selected products information must be stored in IndexedDB. The enduser may remove the selected product from the Product Cart table and hence it will be removed from the IndexedDB also. When the End-User finally click on buttopn of Purchase the indexedDB must create an objectStore in name  'Bill' where the Bill No will be generated along with the Total bill. (Means the IdnexedDB will have 2 object stored ne for Purchased Products and other for the TotalBill)   
