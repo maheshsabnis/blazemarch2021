@@ -92,8 +92,86 @@
 - Create a Radio-Button list for Categories and Manufactirers 
     - Input type="radio", same name of arr radio button
 
+
+# Managing the UI and UX
+1. Fluid User Interface and Experience
+2. Developers Vs Designers
+    - Developers, develop app with
+        - Logic
+        - Events
+        - Data
+        - Behavior
+    - Designer, develop the App UI with
+        - Colors
+        - Dimensions
+        - Animations
+        - Layouting    
+3. Guideline for Integration or Association between Designers and Developers
+    - HTML 5
+        - Inline CSS and Inline JavaScript
+    - CSS 3 Property System (W3C)
+        - Dimensions
+            - Height, width, etc.
+        - Look and Feel
+            - Background-color, color
+        - Fonts and Text
+            - font-size, font-weight, fomt-familiy, etc.
+            - Font Colors for Text
+            - Text Fluid Properties e.g. Alignment
+                - Transformation
+                - Spacing
+                - Shadow 
+        - Layout
+        - Fluid UI
+            - Overflow
+                - Set the Max height and width for the element and apply the scross for the element
+            - Float
+                - Text + Image alignment
+            - Alignment
+        - Forms    
+    - CSS Advanced Porperties (W3C)
+        - 2D, 3D Transformationa
+        - Effects
+        - Columns
+        - Box
+        - Media Queries    
+4. CSS 3 Object Models and Libraries
+    - Selectors
+        - Tag Selector
+            - HTML element will be applied with styles based on its tag
+                - internally it is document.getElementsByTagName()
+            - Styles will be applied on more than one element
+        - Class selctor
+            - The Style will be applied based on 'class' attribute of the element
+                - internally it document.getElementsByClass()
+        - Index Based Iterations
+            - Apply Styles based on position of elements
+            - Apply Styles based on Attribute values of elements
+            - Apply Styles based on the element  index in the collection           
+
+    - Classes
+    - Styles
+    - Libraries
+        - Bootstrap
+        - Flexbox
+5. CSS 3 Programming
+    - Using CSS 3 Selectors for Enhancing JavaScript
+
+    - Using CSS 3 for defining classes and applying Styles 
+
 # Date 08-April-2021
 
 Create a HTML Page that will show a Table that contains the Products Information with products properties give in Exercise of Dat 07-Apri-2021.
 
-The End-Use will be able to drag the row from the table of Product information and drop it in the table of Product Cart table. THe moment the row is dropped the Product Cart table must show the total proce of the selected products and the selected products information must be stored in IndexedDB. The enduser may remove the selected product from the Product Cart table and hence it will be removed from the IndexedDB also. When the End-User finally click on buttopn of Purchase the indexedDB must create an objectStore in name  'Bill' where the Bill No will be generated along with the Total bill. (Means the IdnexedDB will have 2 object stored ne for Purchased Products and other for the TotalBill)   
+The End-Use will be able to drag the row from the table of Product information and drop it in the table of Product Cart table. THe moment the row is dropped the Product Cart table must show the total proce of the selected products and the selected products information must be stored in IndexedDB. The enduser may remove the selected product from the Product Cart table and hence it will be removed from the IndexedDB also. When the End-User finally click on buttopn of Purchase the indexedDB must create an objectStore in name  'Bill' where the Bill No will be generated along with the Total bill. (Means the IdnexedDB will have 2 object stored ne for Purchased Products and other for the TotalBill)  
+
+# Date 01-April-2021
+1. Change the Background-COlor, Foreground color and font of Table Row based on MouseEnter ever, the table-row should retain its original style when mouse left from it
+
+2. In the tabel showing list of Employees use following styles to show employeed from different department in differt colors
+    - e.g. IT --> RED
+           HR --> Yellow
+           ACCOUNTS --> Black
+           SALES --> Cyan 
+
+

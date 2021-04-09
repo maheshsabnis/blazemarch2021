@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        .c1 {
+            background-color: red;
+            color: yellow;
+            height: 30px;
+            width: 300px;    
+        }
+        /* the input button element with class as c1
+          only font-size and the  font-family styles will be applied
+          all other styles will be inherited from the class selector  
+        */
+        input[type='button'].c1 {
+            font-size: 20px;
+            font-family: cursive;
+            color: cyan;
+        }
+        input[type='button'] {
+            height: 30px;
+            width: 400px;
+            font-size: 20px;
+            color: blue;
+            font-family: 'Times New Roman', Times, serif;
+            
+        }
+    </style>
+    <script>
+        window.onload = function (){
+            document.getElementById('t1').addEventListener('keyup',function(){
+                if(this.value.length >0){
+                    this.style.fontSize="100px";
+                    this.style.fontFamily="Times New Roman";
+                    this.style.fontWeight="Bold";
+                    this.style.color="red";
+                    this.style.backgroundColor="yellow";
+                } else {
+                    this.style.fontSize="10px";
+                    this.style.fontFamily="Times New Roman";
+                    this.style.fontWeight="normal";
+                    this.style.color=undefined;
+                    this.style.backgroundColor="white";
+                }
+            },false);
+
+            document.getElementById('t2').addEventListener('keyup',function(){
+                if(parseInt(this.value)<0 || this.value.length === 0){
+                    this.style.borderColor="red"; // invalid
+                    document.getElementById('btnsave').disabled = true;
+                } else {
+                    this.style.borderColor="green"; // valid
+                    document.getElementById('btnsave').disabled = false;
+                }
+
+            },false);
+        }
+    </script>
+</head>
+<body>
+    <h1>The CSS 3 Class Selectors</h1>
+    <input type="text" class="c1">
+    <br>
+    <input type="text" id="t1">
+    <br>
+    <input type="text" class="c1">
+    <br>
+    <input type="button" value="Button 1" class="c1">
+    <br>
+    <input type="button" value="Button 2" class="c1">
+    <br>
+    <input type="button" value="Button 3" id="btnsave">
+    <br>
+    <input type="text" id="t2">
+</body>
+</html>

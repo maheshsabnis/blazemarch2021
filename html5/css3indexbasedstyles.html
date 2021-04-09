@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        table,td {
+            border:double;
+            border-color: antiquewhite;
+        }
+        /* apply style of second row of the table */
+        tr:nth-child(2){
+            background-color: blue;
+            color: yellow;
+        }
+        /* Style is applied to second last child */
+        tr:nth-last-child(2){
+            background-color:cyan;
+            color: yellow;
+        }
+
+        /* Apply style to the last td in each row of the table*/
+        td:nth-last-child(1){
+            background-color: red;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Applying styes based on Index of the element</h1>
+    <table>
+        <tr>
+            <td>11</td>
+            <td>12</td>
+            <td>13</td>
+        </tr>
+        <tr>
+            <td>21</td>
+            <td>22</td>
+            <td>23</td>
+        </tr>
+        <tr>
+            <td>31</td>
+            <td>32</td>
+            <td>33</td>
+        </tr>
+        <tr>
+            <td>41</td>
+            <td>42</td>
+            <td>43</td>
+        </tr>
+    </table>
+</body>
+</html>

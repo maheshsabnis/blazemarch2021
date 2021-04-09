@@ -1,0 +1,37 @@
+.c1 {
+    width: 100px;
+    height: 100px;
+}
+.save {
+ background-color: aqua;
+}
+input[type="text"]{
+  /* border-XXXX are CSS 3 Style properties*/  
+   border-radius: 25px;
+   border-color: chocolate;
+   width: 400px;
+   height: 90px;
+   font-size: 50px;
+}
+label {
+   background-color: black;
+   color: yellow;
+   font-size: 40px;
+}
+/* CSS 3 style properties*/
+div {
+    border-width: thin;
+    width: 800px;
+    height: 200px;
+    border-radius:50px;
+    /*browserspecificstyles-webkit:;
+    theChromeandallchromebasedbrowsers-moz:;
+    theMOzillaFIrefoxbrowser-ms:;
+    IE10,11-o:;
+    thesafari*/-webkit-border-radius: 30px;
+    -moz-border-radius:50px;
+    -ms-border-radius:50px;
+    -o-border-radius:50px;
+    box-shadow: 5px 5px red;
+    -webkit-border-radius:50px;
+}

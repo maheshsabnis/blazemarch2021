@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+       div{
+           border: double;
+           height: 180px;
+           overflow: scroll;
+       }
+       /* Any HTML Parent the first 'p' element*/
+       p:first-of-type {
+         background-color: yellow;
+         font-family: Arial, Helvetica, sans-serif;
+         font-size: 40px;
+       }
+
+         /* Any HTML Parent the last 'p' element*/
+         p:last-of-type {
+            background-color: red;
+            font-family: cursive;
+            font-size: 40px;
+          }
+
+    </style>
+</head>
+<body>
+    <h1>The Style will be applied based on index <aside>
+        First Child of 
+        Last Child Of
+        Child at specific index
+    </aside></h1>
+    <p>Paragraph 1</p>
+    <p>Paragraph 1</p>
+    <div>
+        <p>Paragraph 1</p>
+        <p>Paragraph 2</p>
+        <p>Paragraph 3</p>
+    </div>
+<hr>
+    <div>
+        <p>Paragraph 11</p>
+        <p>Paragraph 12</p>
+        <p>Paragraph 13</p>
+    </div>
+    <hr>
+    <div>
+        <p>Paragraph 21</p>
+        <p>Paragraph 22</p>
+        <p>Paragraph 23</p>
+    </div>
+</body>
+</html>

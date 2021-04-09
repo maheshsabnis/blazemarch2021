@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style type="text/css">
+      /* the 'First' occures are first position in class value 
+       class value starts with 'First'
+      */
+      div[class^='First']{
+          background-color: aqua;
+          color: red;
+          font-family: cursive;
+      }
+      /* class values ends with 'Second' */
+      div[class$='Second']{
+        background-color: yellow;
+        color: red;
+        font-family: cursive;
+    }
+
+    /* class values contains 'the' at any position */
+    div[class*='the']{
+        background-color:blue;
+        color:yellow;
+        font-family: cursive;
+    }
+
+    input[value^="James"]{
+        background-color:blue;
+        color:yellow;
+        font-family: cursive;
+    }
+
+    </style>
+
+</head>
+<body>
+    <h1>Apply Styles based on Attribute values</h1>
+
+    <div class="First Div on Page">
+        First Div on Page
+    </div>
+    <hr>
+    <div class="This is Div as Second">
+        This is Div as Second
+    </div>
+    <hr>
+    <div class="Div the Last">
+        Div the Last
+    </div>
+    <hr>
+    <input type="button" value="James Bond is MI6 Fictios Agent">
+</body>
+</html>
