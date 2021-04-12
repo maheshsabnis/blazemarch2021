@@ -136,7 +136,7 @@ babel <SOURCE-FILE>.js -o <TARGET-FILE>.js
                                
 
 # Hands-on-Labs
-
+Date : 12-04-2021
 1. Create an array of objects that will store records of products in ad-hoc manner. This means that there might be duplicate records for produtcs available. Now implement a UI application HTML that will provide the product details to the End-User based on actions taken by end-use on UI as follows
     - When End-User clicks on LoadAll button all records must be displayed in Table
     - When End-User clicks on RemoveDuplicate button, the the table should show all unique records
