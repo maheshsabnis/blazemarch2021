@@ -206,4 +206,6 @@ Date : 12-04-2021
 
  # Date: 14-04-2021
 
- 1. Use the Map to store the One-to-Many relationship data e.g. Categories and Products. This data must be acepted from UI. When the data is accepted for Category and Products from UI, make sure that if the Category Already Exists do not acept it again and throw error for the same. If the Product is already present in that category then make sure that the product is not accepted. Make sure that there are two tables one each for Category and Product.  When the User selects the Row from Category Table, the Product table should show only products for the category. IMP. You must use the same Map() for storing Category-Products data.   
+ 1. Use the Map to store the One-to-Many relationship data e.g. Categories and Products. This data must be acepted from UI. When the data is accepted for Category and Products from UI, make sure that if the Category Already Exists do not acept it again and throw error for the same. If the Product is already present in that category then make sure that the product is not accepted. Make sure that there are two tables one each for Category and Product.  When the User selects the Row from Category Table, the Product table should show only products for the category. IMP. You must use the same Map() for storing Category-Products data. 
+    {CatId, CatName}
+    {ProductId, ProductName}
