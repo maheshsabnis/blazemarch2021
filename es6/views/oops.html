@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./../build/simpleclass.build.js"></script>
+    <script>
+        let obj  =new SimpleClass();
+        console.log('Add = ' + obj.add(10,20));
+        let obj1 = new SimpleClassParameters(2,3);
+        console.log('Add in SimpleClassParameters = ' + obj1.add());
+        obj1 = new SimpleClassParameters(0,0);
+        console.log('Add in SimpleClassParameters = ' + obj1.add());
+    </script>
+</head>
+<body>
+    <h1>OOPs</h1>
+</body>
+</html>

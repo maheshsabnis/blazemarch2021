@@ -133,8 +133,67 @@ babel <SOURCE-FILE>.js -o <TARGET-FILE>.js
     - Array.forEach() Vs Array.map()
         - forEach() callback,  cannot modify the array and return value from it
         - map() callback, can modify the records from array and return it      
-                               
+- CReating a Data Structure for preventing the repeated value to be stored in collection. These new collections are iteratable
 
+    - Set() and WeakSet()
+        - Set() used to Store Primptive Types
+            - number, string
+        - Set() can also store objects 
+    - Set Methods
+        - add(), to add new entry
+        - delete(), to remove entry
+        - has() to check entries
+        - keys() , to listb keys
+        - values(), to list values
+        - entries(), to iterate over all entries
+        - nfoprEach(), toiterate over set
+    - Set Properties
+        - size, to read max size of the set        
+        - WeakSet()
+            - Object or reference types only
+    - WeakSet
+        - Keys can obly be Objects (no primptive types)
+        - this data structure does not have following methods
+            - keys(), values()
+            - size propertyn also does not exist
+    - Map()
+        - Key / Value pair of DataStructure line dictionary 
+        - Key will always be premptive type
+            - number or string    
+        - set(), get(), size, entries(), values(), keys(), forEach(), clear(), delete(), has()        
+        - Map will have keys as unique (like primary key), the previous value of the same keykey will be overwritten 
+    - WeakMap()
+        - Like Map() but the Key is Object                                          
+- Object Oriented Programming (OOPs)
+    - 'this' object
+    - The class is decalred using 'class' keyword and all public data members ,must be prefixed with  'this.'
+    - the constructor() is a standard method 
+    - constructor() overloading is not allowed
+    - all methods are 'public' by default
+    - class level declaration of data members is not allowed
+    - the default support for private is not available
+        - Babel Plug-In for Private
+            - @babel/plugin-proposal-private-methods
+            - the private declaration is provided using #
+    - get/set proeprty support       
+        -  - Babel Plug-In for properties
+            - @babel/plugin-proposal-class-properties
+    - Inheritence
+        - The 'extends' keyword
+        - If the derived class has the ctor then the 'super()' method is required to acces base class ctor
+        - Derive class has an access to all publc members of base class        
+- npm install --save-dev @babel/plugin-proposal-class-properties @babel/plugin-proposal-private-methods
+
+- modify the .babelrc
+    - "plugins":[
+        "@babel/plugin-proposal-private-methods",
+        " @babel/plugin-proposal-class-properties"
+    ]          
+
+- Using Object Spread as spread operator for passing infine parametrers to method
+    - use the spread operator to manage the object updates in immutable object
+        - ...obj
+    - USe spread to pass infinite no. of parameters to method            
 # Hands-on-Labs
 Date : 12-04-2021
 1. Create an array of objects that will store records of products in ad-hoc manner. This means that there might be duplicate records for produtcs available. Now implement a UI application HTML that will provide the product details to the End-User based on actions taken by end-use on UI as follows
@@ -144,3 +203,7 @@ Date : 12-04-2021
     e.g. PrductName,CategoryName, Price,Manufacturer etc. Now when end-user clicks on ShowProductsBasedOnFilterKey button then the table must show only matched data based on filter key enterd in textbox
     - End-User must be provided the facility of grouping the records based on CategoryName or Manufacturer     
  Note: Use ES 6 Array methods of your choice   
+
+ # Date: 14-04-2021
+
+ 1. Use the Map to store the One-to-Many relationship data e.g. Categories and Products. This data must be acepted from UI. When the data is accepted for Category and Products from UI, make sure that if the Category Already Exists do not acept it again and throw error for the same. If the Product is already present in that category then make sure that the product is not accepted. Make sure that there are two tables one each for Category and Product.  When the User selects the Row from Category Table, the Product table should show only products for the category. IMP. You must use the same Map() for storing Category-Products data.   
