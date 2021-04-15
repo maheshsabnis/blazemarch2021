@@ -193,7 +193,71 @@ babel <SOURCE-FILE>.js -o <TARGET-FILE>.js
 - Using Object Spread as spread operator for passing infine parametrers to method
     - use the spread operator to manage the object updates in immutable object
         - ...obj
-    - USe spread to pass infinite no. of parameters to method            
+    - USe spread to pass infinite no. of parameters to method    
+
+- The Proxy Pattern with ES 6
+    - This is a mechanism of provding a remote access of original (aka target) object with following
+        - Wrappig properties inside Proxy Handler
+        - Attaching Custom behavior to properties using Proxy Handlers
+        - Providing Reflection behavior
+    - The  'Proxy(targetObject, handler)' object
+        - The 'targetObject' is the original object to be proxied
+        - The 'handler' is a object that will be used to provide property hiding and custom behavior definition on the targetObject
+            - handler is a object with the folloiwng methods 
+                - get(target, prop)
+                    - the method used to get properties of terhet object
+                        - target, the target object aka original object
+                        - prop, the proeprty form the target object   
+        - To perform tyhe write operation use the 'set(target, prop,value)' method
+            - The 'value' is the value to be assigned to to the property 
+- Reflect
+    - The ES 6 object taht privides ready to user methods to define the proxy of target object easily
+        - set(tetgetobject, property, value) to set the value
+        - get(targetobject, property) to get the value
+
+- Working with Data Iterations
+    - Creating Iterators
+        - Custom mechanism of defining a logic to read data from Sequence
+        - Custom iterator must contains following method
+            - the 'next()' method, this is used to read next record from sequence after returning the current record
+            - this method starts reading the record from the initial position of the sequence and advanced to the last position, by using 'step' counter
+            - The 'step' counter is the value to instruct to the next() method for increament to read the record at the next position
+            - The 'done', the flag that will be set to true to indicate that the sequence iteration is completed
+
+    - Using the Generators        
+        - ES 7+ mechansim of providing the sequece iteration by yielding data from the sequence
+        - They are function* implementation
+            - * menas the current function is generator function to yield records from sequence 
+        - The generator funciton provides, next(), yield, done and value out of the box to read next record, return the record, flag for completion and the value of the current record respectively
+
+- Accessing an External Service from JavaScript
+    - XMLHttpRequest object
+        - The AJAX object, used to perform Http calls to external Services (Web Services / Data Services (REST APIs))
+            - open('<HTTP-METHOD>', '<URL>', <ASYNC-STATE>, '<CREDENTIALS-UNAME>', '<CREDENTIALS-PWD>') method
+                - HTTP-METHODS, GET/POST/PUT/DELETE
+                - ASYNC-STATE, perform operations either sync / async. Default is async.
+            - send(Body)// used incase of POST / PURT Request
+            - setRequestHeader(), pass the request headers when performing POST and PUt calls
+                - Content-Type:application/json  
+- Using Promise Object
+    - Its a container object that will be used to monitor the state of all external asynchronous operations
+        - USed in case when the Browser initiate 'LONG RUNNING' process
+            - AJAX Calls
+            - Socket Calls
+            - Heavy Data Processing on Client
+            - Iteration over large collections
+        - Pure ES 6 object with following methods
+            - then(), represents the operation completed successfully
+            - catch(), represents the operation is failed
+            - complete(), completing the promise and releasing resources on browser thread
+        - Promise(resolve,reject)
+            - resolve, the callback that is executed when the async operation is sucessful   
+            - reject, the callback that is executed when the async operation is failed
+- fetch()
+    - A Promise based async object for AJAX calls            
+- ES 7
+    - async/await
+    - If the method calls any other method in it that returns the Promise object, then the calling method must be decorated with 'async' keyword  and the asynchronous call must be decorated with 'await' keyword                                        
 # Hands-on-Labs
 Date : 12-04-2021
 1. Create an array of objects that will store records of products in ad-hoc manner. This means that there might be duplicate records for produtcs available. Now implement a UI application HTML that will provide the product details to the End-User based on actions taken by end-use on UI as follows
@@ -208,4 +272,18 @@ Date : 12-04-2021
 
  1. Use the Map to store the One-to-Many relationship data e.g. Categories and Products. This data must be acepted from UI. When the data is accepted for Category and Products from UI, make sure that if the Category Already Exists do not acept it again and throw error for the same. If the Product is already present in that category then make sure that the product is not accepted. Make sure that there are two tables one each for Category and Product.  When the User selects the Row from Category Table, the Product table should show only products for the category. IMP. You must use the same Map() for storing Category-Products data. 
     {CatId, CatName}
-    {ProductId, ProductName}
+    {ProductId, ProductName}\
+
+ # Date 15-April-2021
+
+ Modify the files in application folder to create an applicaiton that will use the AJAX calls w.r.t. the REST API in the following URL
+ 
+ https://apiapptrainingnewapp.azurewebsites.net/api/Products
+
+1. The datautility.js must contains code for making AJAX calls GET /POST/ PUT/ DELETE for Products
+2. validdata.js, must contains code for defing proxy for validating the Product as follows
+    - ProductName Can be aplhanumeric
+    - ProductId, must be alphanumeric and start with 'Prd-'
+    - BasePrice is must as asn must be +ve integer
+3. uigenerator.js should generate <select> for Showing Categories and Manufacturers. The generateTAble function must generate the Products Table
+4. application.js must contains code for handling events for the UI     
