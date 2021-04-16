@@ -1,1 +1,0 @@
-sequelize-auto -h localhost -d Company -u root -x P@ssw0rd_ --dilect mysql -t Department Employee -l esm

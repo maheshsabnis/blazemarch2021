@@ -1,0 +1,101 @@
+UX Libraries and Frameworks
+- Boostrap (HTML+CSS+JavaScript Framework)
+    - CSS Object Model
+        - CSS Library, bootstrap.min.css
+            - Container
+            - Grid
+            - Tables
+            - Pagination
+            - Navigation
+            - Button
+            - Input
+            - Lists
+            - Forms
+        - PlugIn Frameworks
+            -  boostrap.min.js
+                - Standard Plugins
+                    - ProgressBar
+                    - Spiner
+                    - Carousal
+                    - MOdeldialog
+                    - DatePicker
+- Dependency
+    - jquey is depednency of boorstrap                           
+- FlexBox
+     - CSS Layout module for auto-arangement of the UI
+        - CSS Layout + JavaScript 
+- FActs of Browser
+    - Default width for the browser in Desktop mode is 1200px    
+- Use <div></div> than to use <table></table>     
+- table classes 
+    - table
+    - table-bordered
+    - table-striped
+    - table-danger , table-dark, etc
+    - table-responsive
+- Form Classes
+    - Stacked Form (the default)
+        - form-group
+            - create a group of form element(s) inside div
+        - form-control
+            - applied on input and select elements for form
+        - form-check-input
+            - check box   
+        - button classes for form
+            - btn
+            - btn-default
+            - btn-success
+            - btn-alert
+            - btn-danger
+            - btn-warning     
+    - inline form (bootstrap 4)    
+        - form-inline 
+            - class applied on form tag for inline (aka horizontal) forms
+    - Form with input groups
+        - the input element inside the form must be self-explanatory with its meaning and values     
+            - e.g. the input element accepting the Email must be having the default value as rule for entring email address e.g @hotmail.com
+        - Input element with group value preceeds to input e.g. prepend
+            - input-group
+            - input-grpup-prepend
+            - input-group-append
+            - input-group-text
+                - text displayed with ann experience of displaying it in the input box
+        - Input element with group value appends to input       
+- List Groups
+    - Define the ordered or unorderedlist grouping
+        - list-group
+            - applied on ul
+        - list-group-item
+            - applied on li
+        - active
+            - class to provide default selection for the list
+- Using the badge class             
+    - used to display a notification on HTML UI element about something has happened in background
+        - .badge
+        - .badge-primary
+        - .badge-pill
+
+
+# SASS
+    - Syntactically Awesome Stylesheets
+    - developed on 2006
+    - CSS Pre-Processeor
+        - Variable declaration and its parsing for creating CSS clases
+        - CSS code repeatation can be avoided
+    - Convert the SCSS into CSS
+        - Use gulp with gulp-sass module     
+
+
+# Date:16-04-2021
+
+- USe the Bootstrap CSS for performing the following UI operations
+    - Modify the Product Form as Bootstrap Form
+    - Modify the table to show the Bootstrap Table with Overflow vertically
+        - Keep the Header Constant out of the overflow
+    - Make sure that when the Mouse is moved over the table rows the following color bands to be displed for table row when the mouse is entered in it
+        - Electronics Category, Red Color (danger)
+        - Electrical Categoy, Blue color (primary)
+        - Food, warning color     
+        - Choose your colors for other categories
+    - optional: Create a button group those are used for New and Save operations
+        - The ProductRowId textbox shuold be visible when the record is added

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "babel": "babel --presets es2015 es6modules/consumer.js -o build/main.bundle.js",
+    "start": "http-server",
+    "webpack": "webpack"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +17,14 @@
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-proposal-private-methods": "^7.13.0",
     "@babel/preset-env": "^7.13.15",
-    "babel-preset-es2015": "^6.24.1"
+    "babel-loader": "^8.2.2",
+    "babel-preset-es2015": "^6.24.1",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "webpack": "^5.33.2",
+    "webpack-cli": "^4.6.0"
+  },
+  "dependencies": {
+    "gulp-babel": "^8.0.0"
   }
 }

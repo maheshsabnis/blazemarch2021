@@ -1,0 +1,17 @@
+/* defining variables for style values */
+div {
+  height: 300px;
+  width: 400px;
+  border: double;
+  border-color: red; }
+
+body {
+  background-color: red;
+  color: yellow;
+  font-size: 30px; }
+
+input {
+  background-color: red;
+  color: yellow;
+  font-size: 30px;
+  height: 100px; }

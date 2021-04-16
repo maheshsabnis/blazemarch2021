@@ -257,7 +257,68 @@ babel <SOURCE-FILE>.js -o <TARGET-FILE>.js
     - A Promise based async object for AJAX calls            
 - ES 7
     - async/await
-    - If the method calls any other method in it that returns the Promise object, then the calling method must be decorated with 'async' keyword  and the asynchronous call must be decorated with 'await' keyword                                        
+    - If the method calls any other method in it that returns the Promise object, then the calling method must be decorated with 'async' keyword  and the asynchronous call must be decorated with 'await' keyword     
+
+- ES 6 JS Modules
+    - Older Days of COde Splitting using separte .js files
+        - JS Task Management Packages
+            - require.js
+                - Module loader for managing dependency across verious JS files
+                    - main.js with require.js config() object
+                    - Asynchronous Module Loader (AMD) 
+            - Grunt aka grunt.js
+                - Engine for building and executing JavaScript Tasks for
+                    - merging JS file
+                    - minifying JS file       
+                - install grunt
+                - create grunt.js file and write all tasks in it
+                    - e.g. Concat , minify, etc.    
+            - Gulp
+                - Simplification of Grunt where tasks are piped together, means when first task is completed the the second taks is loaded automatically
+                - install gulp
+                - create a gulpfile.js
+                    - write all piped tasks
+                        - concat, minify (js files)
+                        - CSS files
+                            -  converting sass files into CSS files
+    - systemjs
+        - Module loader used for ES 6 (initialiiy adapted by Angular)
+            - systemjs.configure(<CONFIGURATION-OF-READING-AND-LOADING-JS-FILES>)
+    - webpack
+        - Superheroic framework for Module Bundler and loader
+        - webpack.config.js
+            - Use the module loaders for
+                - transpiling ES 6 files
+                - Concatinating and  Minifying  resultant files
+                - lading file in browser
+                - loading CSS files in browser
+            - React CLI, create-react-app
+                - uses webpack internally
+            -Angular CLI
+                - uses webpack internally
+- using gulp
+    - install gulp in global scope
+        npm install -g gulp
+    - install gulp, gulp-concat in local scope
+        - npm install --save-dev gulp gulp-concat gulp-sass browser-sync 
+
+        - gulp-bable, @babel/plugin-transform-runtime
+- Using ES 6 modules
+    - export, the ES 6 object to export  types (class/function/array/datamember)
+    - import, the ES 6 object used to import the exportable types using 'export'                                                                            
+    - error when ruunning ES 6 modules on node server on terminal window or command prompt
+        - Warning: To load an ES module, set "type": "module" in the package.json or use the .mjs extension. 
+- using gulp for babel
+    - Babel 7   
+        - gulp-babel for transpilation
+- Loading ES 6 modules directly in browser
+    - Use WebPack for loading ES 6 modules in browser
+    - Use the 'module' script  loader for direcly loading the ES 6 scripts in browser
+        - <script type="module" src="<ES6 SCRIPT>">  
+            - Older browser  does not support
+            - Mobile browsers have limitations      
+
+
 # Hands-on-Labs
 Date : 12-04-2021
 1. Create an array of objects that will store records of products in ad-hoc manner. This means that there might be duplicate records for produtcs available. Now implement a UI application HTML that will provide the product details to the End-User based on actions taken by end-use on UI as follows
