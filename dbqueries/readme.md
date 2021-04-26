@@ -134,6 +134,16 @@ DELIMITER ;
 
 call  InsertCategory(4, 'Cat-004', 'Fashion')
  
+# Hands-On on database
+
+1. Write a Store Proc to insert Products in Product table with follwoing checkpoints
+  - The Stored Proc must access all columns of Product table as input parameter and should validate input parameters on followoig validations 
+    - The ProductId must start from 'Prd-'
+    - The Price must be +ve
+    - ProductName must start from UpperCase Chatacter and can accept alphanumeric values
+  - If all validations are satisfied then success result must be rerturned or else error message for invalidation must be returned  
+
+
  
  
  
