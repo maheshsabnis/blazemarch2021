@@ -482,21 +482,217 @@ server.listen(6001);
 console.log('Started on port 6001');
 ```
 
+    - using HTTP Module for requesting for Data (Read/Write) to the external API
+        - http.request(<SERVER-OPTIONS>, callback(res));
+            - SERVER-OPTIONS
+                - Metedata of the external server
+                    - host: hostname / ip address
+                    - port: if any specific port
+                    - path: url of the REST API e.g. /api/...
+                    - method: GET / POST / PUT /DELETE
+                    - headers: {header values e.g. MIMT TYpes, AUTHORIZATION, etc}
 
     - Path
 
         - How to Access  Files in File System by using Server Path
 2. Creating Custom Modules
     - Creating Multi-Layer Server-Side JavaScript Application
+    - This is an approach of creating a seperate reusable logic file for the node application
+        - the following module code is in file1.js
+            - module.exports = {
+                fn1:function(){....},
+                fn2:function(){...}
+            };
+        - the fn1 and fn2 are exported so that they can be imported
+        - To import the module e.g. in file2.js perform the following
+            - const module = require('file1.js');
+            - then access all functions
+                - module.fn1();
+                - module.fn2();
 3. Use Third-Party External Modules
     - Promise Modules e.g. q
+        - Promise().then().then().then()....catch(); w.r.t. browser
+            - Sequential Execution
+                - In the then() of first async call make other async call
+            - Parallel
+                - Promise.all([p1,p2,p3....,p10]); w.r.t. browser   
+    - the 'q' the Promise Package
+        - npm install --save q
+    - the 'BlueBird' the Promise Package             
 4. Web Application Framework
     - Express
         - Creating Express Web Application with Static Resources e.g. HTML,JS and CSS files
+``` javascript
+const express = require('express');
+// using the pathe module to read files for the root of the server application
+const path = require('path');
+
+// define an instance of express
+let instance = express();
+
+// configuration to read static files
+
+instance.use(
+    express.static(path.join(__dirname, './../node_modules/jquery/dist'))
+);
+instance.use(
+    express.static(path.join(__dirname, './../node_modules/bootstrap/dist/css'))
+);
+
+// define a router object to accept requests for pages
+
+let router = express.Router();
+// configure the express instance to use router in request processing
+instance.use(router);
+
+// use router expression for Request Processing
+// parameter 1: URL for Route Expression
+// parameter 2: request Handler Callback
+// callback(req,resp)
+// req: Request object for accpeting Request information
+// resp: response obect to send HTTP Requese 
+router.get('/',(req,resp)=>{
+
+    // __dirname is Node.js global object to define the root path of
+    // the application 
+    // path.join(), will link the actual resource path with the
+    // application root path
+
+    resp.sendFile('index.html', {
+        root: path.join(__dirname, './../views')
+    });
+});
+
+router.get('/home',(req,resp)=>{
+    resp.sendFile('home.html', {
+        root: path.join(__dirname, './../views')
+    });
+});
+router.get('/about',(req,resp)=>{
+    resp.sendFile('about.html', {
+        root: path.join(__dirname, './../views')
+    });
+});
+
+
+// start listening on the port
+instance.listen(6001,()=>{
+    console.log('Started listening in port 6001');
+});
+
+```
         - Creating REST APIs using Express
+            - RequestHandler's response object have followign methods
+                - sendFile(), respond the static file
+                - send(), can be used to respond any data (text/xml/json/binary)
+                - json(), used to respond only JSON data
+                - status(), used to respond status
+            - To write the JSON data to Express REST APIs make sure the the Express uses the MIME Type Encoding to Parse the data
+                - Add the followign middlewares in express inastance
+                    - instance.use(express.json())
+                    - instance.use(express.urlEncoded({extended:false})) 
+                - NOTE: Earlier versions of Express was using 'body-parser' package for MIME TYPES, they are depricated in Express 4.0+    
+            - The REST APIs must be confgured for Cross-Origine-Resource-Sharing (CORS) to enable accees of REST apis from browser clients from different domain with conditions as follows
+                - http to https
+                - https to http
+                - Domain 1 to Domain 2    
+                    - e.g. http://www.xyz.com to http://www.pqr.com
+                - Headers
+                    - The request must contain headers e.g. AUTHORIZATION headers
+                - Method
+                    - GET / POST   PUT / DELETE
+            - the 'cors()' package
+                - npm install --save cors              
+``` javascript
+const express = require('express');
+const cors = require('cors');
+let emps = [
+    {EmpNo:101, EmpName:'ABC', DeptName:'IT'},
+    {EmpNo:102, EmpName:'PQR', DeptName:'HR'},
+    {EmpNo:103, EmpName:'ABC', DeptName:'SL'},
+    {EmpNo:104, EmpName:'PQR', DeptName:'IT'},
+     {EmpNo:105, EmpName:'ABC', DeptName:'HR'},
+    {EmpNo:106, EmpName:'PQR', DeptName:'SL'},
+     {EmpNo:107, EmpName:'ABC', DeptName:'IT'},
+    {EmpNo:108, EmpName:'PQR', DeptName:'HR'},
+    {EmpNo:109, EmpName:'PQR', DeptName:'SL'}
+];
+// define an instance of express
+let instance = express();
+
+// configure MIME-TYPE Formatters
+// only support for JSOn data
+instance.use(express.urlencoded({extended:false}));
+
+instance.use(express.json()); 
+
+// configure cors middleware
+instance.use(cors({
+    origin: '*', // specific origin must be specified is any
+    allowedHeaders: '*', // specific headers
+    methods: '*' // specific methods 
+}));
+
+// get request
+instance.get("/api/employees", (req,resp)=>{
+    resp.status(200).send({message:'Records Received Successfully', data: JSON.stringify(emps)});
+});
+
+// get request by id in header parameter
+// parameter is added in URL using ':<PAREMETER-NAME>'
+instance.get("/api/employees/:id",  (req,resp)=>{
+    // read the header
+    let id = req.params.id; // must match with actual parameter name
+
+    let emp = emps.filter((e,i)=>{
+        return e.EmpNo === parseInt(id)
+    });
+    console.log(`Searched ${JSON.stringify(emp[0])}`);
+    if(emp[0] === undefined){
+        resp.status(404).send({message:'Records is not found'});
+    } else {
+        resp.status(200).send({message:'Records Searched Successfully', data: JSON.stringify(emp[0])});
+    }
+});
+
+// the post request
+instance.post("/api/employees",(req,resp)=>{
+    // read data from body
+    let emp = req.body;
+    console.log(`Data Received from Body ${emp}`);
+    emps.push(emp);
+    resp.status(200).send({message:'Records Received Successfully', data: JSON.stringify(emps)});
+});
+
+// put 
+instance.put("/api/employees/:id",(req,resp)=>{
+    // logic for put to read data from parameter and body both
+    // if id is not found or 0 then return error
+});
+
+// delete 
+instance.delete("/api/employees/:id",(req,resp)=>{
+    // logic for put to read data from parameter and body both
+    // if id is not found or 0 then return error
+});
+
+// start listening on the port
+instance.listen(6002,()=>{
+    console.log('Started listening in port 6002');
+});
+
+```
         - Creating Data Access Layer using Sequelize
         - Securiung REST APIs using JSON Web Tokens
+
         - Express Session Management
+    - npm install --save express express-session cors
+    - Data Access
+        - npm install --save sequelize sequelize-auto mysql2
+    - Sequelize CLI using Sequelize-auto
+        - sudo npm insstal -g sequelize-auto
+    - JWT
+        - npm install --save jwt           
 5. On-Premises Clusters using PM2        
 
 # Node.js for Microservices
@@ -531,4 +727,18 @@ console.log('Started on port 6001');
     - Create a Product array and make sure that only Admin can Add.Update/Delete/Read Products
     - Manager can Add/Update Products
     - Clerk can only Read products                    
+
+
+# Date 28-April-2021
+
+1. Create Seperate pages for List of Employees, Create Employee, Update Employee and Delete EMployee
+    - ListEMployees.html
+        - Show List of Employees when the page is loaded
+        - Add a link on this page to create a new employee
+        - If data is showin in table, then add link or button in each row to navigate to UpdateEmp.html to load Employee to Update and Update the employee
+        - If data is showin in table, then add link or button in each row to navigate to DeleteEmp.html to load Employee to Deete and Delete the employee
+        - UpdateEmp.html and DeleteEmp.html must contians links for navigating back to ListEmployee.html
+    - CreateEmp.html
+        - UI for Creating employee
+        - Add link to navigate to List page
 

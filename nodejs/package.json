@@ -11,5 +11,13 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^15.0.0"
+  },
+  "dependencies": {
+    "bootstrap": "^4.6.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "jquery": "^3.6.0",
+    "q": "^1.5.1"
   }
 }
