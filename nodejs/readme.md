@@ -829,7 +829,7 @@ instance.listen(6002,()=>{
 2. All REST APIs must use the Common Code Standard for DAL and its methods    
     - The DAL must be given the validated models
     - The API.js file must be accessing DAL and will not have any code for Database operations and Data Validations
-        - Single API for Categories and SubCategories
+        - Single API File for Categories and SubCategories
         - Single API for Order and OrderDetails
         - Single API for User Management
         - API for Vendor
