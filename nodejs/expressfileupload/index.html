@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <script src="jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+             $("#frmupload").submit(function(){
+                 // .empty() will clear inner html and then add new text in it
+                 $("#status").empty().text('File is being uploaded');
+
+                 $(this).ajaxSubmit({
+                     error: function(resp){
+                         alert('Error Occured');
+                         status('Error '+ resp.status);
+                     },
+                     success:function(resp){
+                        $("#status").empty().text(resp);
+                     }
+                 });
+
+             });   
+             // stop refreshing the form
+             return false;
+        });
+    </script>
+</head>
+<body>
+    <h1>The Index Page for File Upload</h1>
+    <!--define the form post action to the Endpoint of REST API
+      in this case it is '/uploadfile'
+    -->
+    <form id="frmupload" action="/uploadfile" method="post" enctype="multipart/form-data">
+        <!--The 'myfile' is a filed name that will be used to contains filechunk in it in form-model while uploading-->
+        <input type="file" name="myfile" class="form-control">
+        <hr>
+        <input type="submit" value="Upload the Image File" class="btn btn-success">
+        <hr>
+        <div class="container">
+            <strong>
+                <span id="status"></span>
+            </strong>
+        </div>
+    </form>
+</body>
+</html>

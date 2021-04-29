@@ -682,7 +682,82 @@ instance.listen(6002,()=>{
 });
 
 ```
+        - Express JS Scenarios for Web Application Development
+            - Upload Files
+                - File Operations for Upload uses 'Multi-Part' stream communication
+                    - Divide the File into chunks and process it for Upload
+                        - <form enctype="multipart/form-data">
+                            - form-data is a serialization of FormModel aka name=value pair to be posted
+                            - multipart/form-data
+                                - Chunks of Binary values for files are integrated in FormMoldel serialization when the form is posted
+                - Node.js the 'Multer' package
+                    - This is a middleware for handling multipart/form-data for uploading files from Clients
+                        - Configure the server for Stream of Files for Upload
+                        - Server must uses 'pipe()' for reaceiving the Chunks from HTTP and Concatinate all chunks for creating file
+                            - Node.js, Stream and Pipe packages
+                            - Node.js, busboy package
+                                - Encapsulated Stream and Pipe for File Upload Operations
+                            - Node.js, 'multer' package that encapsulate the busboy to make fileStreaming, Piping and Cocatination easy                    
+            - Download Files
         - Creating Data Access Layer using Sequelize
+            - Object Relational Mapping (ORM) with Node.js
+                - Sequelize is a Promise based Node.js ORM for MS-SQL, MySql, MariaDb, Postgres and SqLite
+                - Database-First Approach
+                    - Model Classes are generated based on Table Schemas and their relationships 
+                    - Model Classes are JavaScript Function Objects those export Table Columns as Properties so that they can be used as Node.js modules
+                        - Function object is Node.js Custom Module module.exports={};
+                    - Recommended in Production if the Database is ready and full-proof 
+                - Mode-First aka Code-First Approach    
+                    - USe Sequelize APIs to create a Model definition
+                        - A Custom Node.js Module aka function that will contains 'properties' those will be reflected in Database Tables for Mapping with Columns
+                        - Setting releationship across modesl must be managed by Model Creator (important and critical)
+                        - Recommended when an application is designed from scratch
+                            - The Team must have accurate information about Schemas and relations across them e.g. One-to-many, many-to-many, etc.   
+            - Sequelize package, (IMP: DO not have ES 6 Module Support with Current Version 6.0+)
+                - npm install --save sequelize
+                - Sequelize("dbName", "username", "password", <OPTIONS>) object
+                    - This object is used to connect to database based on parameters
+                        - Database Name: dbName
+                        - User Name: username
+                        - Password: pwd
+                        - OPTIONS: the JSON object with following properties
+                            - host: <localhost|IP Address | SERVER-NAME>, SERVER-NAME if on Cloud then the instance name e.g. AWS RDS Instance name
+                            - dialect: <DB-PROViDER>, 'mysql' | 'mssql' | 'mariadb' | 'postgres' | 'sqlite'
+                            - pool: JSON Object with Connection Pooling 
+                                - {min:, max:}
+                            - define: JSON object for timestamp used for COncurrency (used in CLoud)      
+                - DataTypes Object
+                    - The Mapped datatypes w.r.t. Database types
+                        - String for Varchar, Char, String
+                        - Number for int
+                        - Boolean for bit, boolean
+                        - Date for DateTime, Date
+                - Model object                
+                    - The Base Type for JavaScript Function to inform Sequelize that how the function is mapped with Database Table 
+                - Complete Command to use Sequelize for MySql to use Database First Approach
+                    - npm install -g sequelize mysql2 sequelize-auto
+                        - The Developer Macbnhie must be connect to mysql instance to create the Models using sequelize-auto CLI tool
+                    -  npm install --save sequelize mysql2 sequelize-auto
+                - Command to generate Models in Database Firstb Approach
+                    - sequelize-auto -h <HOST-MACHINE-NAME | IP-ADDRESS | CLOUD-INSTANCE-NAME> -d <DATABASE-NAME> -u <USER-NAME> -x <PASSWORD> --dialict <DB-PROVIDER> -o <PATH-OF-FOLDER-TO-CREATE-MODEL-FILES> -t <BLANK-SPACE-SEPERATED-LIST-OF-TABLES>
+
+                        - --dialict mysql | mssql | mariadb | pg
+                        - -o if not provided in command will create a models folder and all .js model files will be createdn in it
+                        - if -t is not provided the it will take all table in database
+                - Db Operations 
+                    - Sequelize.sync({force:<BOOL>})
+                        - Connect to Database and initialize the connection for transactions
+                        - Return 'Promise' Object   
+                        - force: if this is true, the Table will be overwritten absed on Model Schema (this is default)
+                            - If the table is already available with some data then set the value of force as false. {force:false}    
+                    - Model Methods, returning 'Promise' object 
+                        - findAll(), returns all records from table
+                        - findOne({where:{<CONDITION>}}), return a record based on Where CLouse Condition
+                        - create(OBJECT to Create), insert new record
+                        - update({OBJECT-TO-UPDATE}, {where:{<CONDITION>}}), update record based on condition
+                        - destroy({where:{<CONDITION>}}), delete record based on condition          
+
+
         - Securiung REST APIs using JSON Web Tokens
 
         - Express Session Management
@@ -742,3 +817,26 @@ instance.listen(6002,()=>{
         - UI for Creating employee
         - Add link to navigate to List page
 
+
+# Date 29-April-2021
+
+1. Write a service to upload and downlod files usign Express RES APIs. Make sure that the API has following
+    - API should accept only .png / .bmp files
+    - The Metadata of the file e.g. name, size and file type must be seperately stored in Database (for the eComm application)
+    - Make sure that the Service will not accept files other than .png / .bmp size more than 5 mb
+    - The Customer must be provided to download the invoice of the Order (research on PDF or bmp or png invoicing format)
+
+2. All REST APIs must use the Common Code Standard for DAL and its methods    
+    - The DAL must be given the validated models
+    - The API.js file must be accessing DAL and will not have any code for Database operations and Data Validations
+        - Single API for Categories and SubCategories
+        - Single API for Order and OrderDetails
+        - Single API for User Management
+        - API for Vendor
+        - Create an API that will ask the Customer to Register first by creating user and then provide Customer Information
+        - The Vendor Must be Approved by Admin to Upload the Products
+        - Product Search must be a open API (accessible w/o authentication)
+        - Create a Log for Application Access that will contains information about
+            - Successful Login
+            - Failed Login
+        - Create a constant for all Hard-Coded Messages    
