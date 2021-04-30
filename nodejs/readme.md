@@ -756,18 +756,61 @@ instance.listen(6002,()=>{
                         - create(OBJECT to Create), insert new record
                         - update({OBJECT-TO-UPDATE}, {where:{<CONDITION>}}), update record based on condition
                         - destroy({where:{<CONDITION>}}), delete record based on condition          
+                - Executing Raw Queries and Stored Procedures
+                    - Sequelize.query("<QUERY | STORED PROC>", {QUERY-TYPE}});
+                        - QUERY-TYPE
+                            - Object of the QueryTypes from 'sequalize' library
+                                - QueryType.SELECT
+                                    - Inform the sequelize that the resul is RowSet (aka Cursor), the resultant of select query
+                        - Sequelize.query() always returns 'Promise'            
+                - Hanlding Transactions       
+                    - Sequelize.transaction();
+                        - Promise based method 
+                            - Transaction Promise Object to define a context to manage concurrent DB Table operations into a single transaction scope
+                                - commit(), a method to commit DB Transactions
+                                - rollback(), a method to remove or withdraw transactions under the scope
+                            - UnManged Transaction 
+                                - COmmit and RollBack operations are exlicitely handled
+                            - Managed Trasactions
+                                - COmmit and Rollback ar automatically observed basd on Db Table Operation Execution status          
 
 
         - Securiung REST APIs using JSON Web Tokens
+            - Authenticated Response will contain two values
+                - JSON Web Token Value with 3 sections
+                    - Header
+                        - A Unique Token Value generated based on Algorithm
+                            - Sha1 / MD5 / Any other Custom Algorithm
+                    - Payload
+                        - Claim information for Indentity Management of the User 
+                            - Used to check the User Identity
+                            - UserName / Role Name / Key
+                    - Signeture
+                        - The Unique Signeture defined by the Tokne provider
+                            - You can choose an angorithm to sign the token                
+                - Token Expiry Time
+                    - In Minutes
+                        - Generally taken as average 20 Mins as recommended lifetime
+                - Refreshed Token
+                    - Any Randor value that is send to client and this value will be used by the server to generate new token automatically w/o the use login again if the JWT token is expired    
+                        - rand-token       
+                -   npm install --save jsonwebtoken            
 
         - Express Session Management
+            - Use express-session 
+            - This is added as the middleware in express instance with following properties
+                - secret, the session ID generator
+                - resave, the booloean property that will be responsible to save the session info in stirage for each new request (the request w/o session info)
+                - saveUnInitialized: the boolean , when set to true will enforce user to login based on credentials and teh auth request will be bound to the session context
+                - cookie, the maxAge sesstings of the session
+                    - min 1 HR
     - npm install --save express express-session cors
     - Data Access
         - npm install --save sequelize sequelize-auto mysql2
     - Sequelize CLI using Sequelize-auto
         - sudo npm insstal -g sequelize-auto
     - JWT
-        - npm install --save jwt           
+        - npm install --save jsonwebtoken           
 5. On-Premises Clusters using PM2        
 
 # Node.js for Microservices
@@ -840,3 +883,15 @@ instance.listen(6002,()=>{
             - Successful Login
             - Failed Login
         - Create a constant for all Hard-Coded Messages    
+# Date 30-April-2021        
+1. CReate a Sample API that will be accessible from the caller using JWT based authentication
+    - The Service will have method for Creating User. 
+        - The UserName and Password must be stored in Database.
+            - IMP NOTE: Store the Password Hash in Database or Crypto value in Database
+                - Note: Use Crypto Package of Node.js
+                    - https://www.nmpjs.com
+        - When then user tries to login in make sure that the user name and password is encrypted and send to API.
+            - NOTE: FIrst complete it for plain text UserName and Password then then integrated ENcryption 
+       - CReate a Common Service That will be used as Identity Servoce for All REST APIs (Start DOing it and must bne completed before the app final deployment)                  
+
+
