@@ -9,7 +9,7 @@ class ProductComponent extends Component {
             CategoryName:'',
             Manufacturer:'',
             BasePrice:0,
-            Categories: ["Electronics", "Electrical", "Food"],
+            Categories: undefined,
             Manufacturers: ["TATA","BAJAJ","HP"]
          };
     }
@@ -38,14 +38,14 @@ class ProductComponent extends Component {
                 <div className="form-group">
                     <label>Categories</label>
                     {/* Generating theSelect options based on state*/}
-                    <select className="form-Control" name="CategoryName" value={this.state.CategoryName}
+                   {/* <select className="form-Control" name="CategoryName" value={this.state.CategoryName}
                      onChange={this.handleChange.bind(this)}>
                         {
                              this.state.Categories.map((cat,idx)=>(
                                  <option key={idx} value={cat}>{cat}</option>
                              ))   
                         }
-                    </select>
+                    </select> */}
                 </div>
                 <div className="form-group">
                     <label>Manufacturer</label>

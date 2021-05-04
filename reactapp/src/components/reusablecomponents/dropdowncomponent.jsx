@@ -17,7 +17,13 @@ class DropDownComponent extends Component {
     }
 
 
+
     render() { 
+        if(this.props.dataSource === undefined){
+           return( <div className="contaier">
+                No Data to show
+            </div>);
+        } else {
         return (  
              <select value={this.props.stateProperty} className="form-control"
               onChange={this.handleChange.bind(this)}>
@@ -27,7 +33,7 @@ class DropDownComponent extends Component {
                      ))
                  }
              </select>
-        );
+        );}
     }
 }
  

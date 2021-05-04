@@ -354,11 +354,696 @@ class DropDownComponent extends Component {
 export default DropDownComponent;
 ```
 
+    - Compositional Pattern Used by React.js
+        - A Complex React App is consisting of multiple Components having Parent/Ch9ld Relationships OR Mutipe Components can be having Common Parent (Brothers)
+            - If any componenty in composition is collapsed the whole DOM will be collapsed/crashed
+            - To Manage the Rendering Errors as well as the unprodictable component crash, use the exception handling mechanism or check for the Lifecycle SUpport for Error Handling 
+            - The lifecycle is important because of the following
+                - Decide when to subscribe to the events in the component to global object
+                - How to inform to the React Object model that the component is unmounted and all events / external subscriptions (e.g. AJAX calls) is released for preveingin the memory leaks.
+                - The script will geberate memory leaks  
+``` javascript
+import React, { Component } from 'react'
 
-    - Component's Lifecycle
-        - Component's Mount and UnMount
-        - Handling Memory Leaks
-        - Accessing External Service in React Apps   
+class LifecycleComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {  
+            value:0
+        };
+        
+    }
+    updateValue=(evt)=>{
+        this.setState({value:parseInt(evt.target.value)});
+    }
+    render() { 
+        if(this.state.value % 2 ===0){
+            return(
+                <div className="contaier">
+                    <h1>The Parent Component</h1>
+                    <input type="text" value={this.state.value}
+                     onChange={this.updateValue.bind(this)}/>
+                     <strong>Showing Even Component</strong>
+                     <EvenComponent></EvenComponent>
+                </div>
+            );
+        } else {
+        return (  
+            <div className="contaier">
+                 <div className="contaier">
+                    <h1>The Parent Component</h1>
+                    <input type="text" value={this.state.value}
+                     onChange={this.updateValue.bind(this)}/>
+                      <strong>Showing Odd Component</strong>
+                     <OddComponent data={this.state.value}></OddComponent>
+                </div>
+            </div>
+        );
+     }
+    }
+}
+
+
+class EvenComponent extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            x:0,
+            y:0
+        };
+        // subscribing the event for global object (window) object
+        // ins constructor
+        // this will generate runtime Warnings for BUGS because the
+        // constrctorm only executes the COmponent intialization bu the
+        // component mounting(?) is still  not completed 
+        window.addEventListener('mousemove', this.getMousePositions);
+    }
+
+    getMousePositions=(evt)=>{
+        this.setState({x:evt.clientX});
+        this.setState({y:evt.clientY});
+        console.log(`Mouse Move x=${this.state.x} && y=${this.state.y}`);
+    }
+
+    render(){
+       return( <div className="container">
+            <strong>
+                x = {this.state.x} and y = {this.state.y}
+            </strong>
+        </div>); 
+    }
+}
+
+class OddComponent extends Component {
+    constructor(props){
+        super(props);
+    }
+    render(){
+        return (
+            <div className="container">
+                <strong>
+                    Value Received from Parent = {this.props.data}
+                </strong>
+            </div>
+        );
+    }
+}
+ 
+export default LifecycleComponent;
+```
+            - Component's Lifecycle
+                - Component's Mount and UnMount
+                    - in componentDidMount() do the following
+                        - Subscribe to events
+                        - Subscribe to promises for extetrnal calls
+                            - Accessing External Service in React Apps  
+                                - use the axios package
+                                    - the promise based libray recommended by React community for managing External HTTP Calls
+``` javascript
+import React, { Component } from 'react'
+import TableComponent from './../../reusablecomponents/tablecomponent';
+import DepartmentHttpService from './../../../services/departmenthttpservice';
+class DepartmentRESTComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {  
+            DeptNo:0,
+            DeptName:'',
+            Location: '',
+            Capacity:0,
+            Departments:[],
+            message:''
+        };
+
+        // define instances of external calls after all state properties are initialized
+        this.serv = new DepartmentHttpService();
+    }
+
+    handleChange=(evt)=>{
+        this.setState({[evt.target.name]:evt.target.value});
+    }
+    clear=()=>{
+        this.setState({DeptNo:0});
+        this.setState({DeptName:''});
+        this.setState({Location:''});
+        this.setState({Capacity:0});
+    }
+
+    componentDidMount=()=>{
+        this.serv.getData().then((response)=>{
+            // mutate the state
+            this.setState({Departments:response.data.rows},()=>{
+                this.setState({message:`Data is Loaded Successfully `});
+            });
+        }).catch((error)=>{
+            this.setState({message:`Error Occured in loading Data ${error}`});
+        });
+    }
+
+    save=()=>{
+        let dept = {
+            DeptNo:this.state.DeptNo,
+            DeptName:this.state.DeptName,
+            Location:this.state.Location,
+            Capacity:this.state.Capacity
+        };
+        this.serv.postData(dept).then((response)=>{
+            this.setState({message:`Department is posted successfully`});
+        }).catch((error)=>{
+            this.setState({message:`Error Occured in loading Data ${error}`});
+        });
+    }
+
+    render() { 
+        return (  
+            <div className="container">
+                <div className="form-group">
+                    <label>DeptNo</label>
+                    <input type="text" name="DeptNo" value={this.state.DeptNo} onChange={this.handleChange.bind(this)} className="form-control"/>
+                </div>
+                <div className="form-group">
+                    <label>DeptNmae</label>
+                    <input type="text" name="DeptName" value={this.state.DeptName} onChange={this.handleChange.bind(this)}  className="form-control"/>
+                </div>
+                <div className="form-group">
+                    <label>Location</label>
+                    <input type="text" name="Location" value={this.state.Location} onChange={this.handleChange.bind(this)}  className="form-control"/>
+                </div>
+                <div className="form-group">
+                    <label>Capacity</label>
+                    <input type="text" name="Capacity" value={this.state.Capacity} onChange={this.handleChange.bind(this)}  className="form-control"/>
+                </div>
+                <div className="form-group">
+                    <input type="button" value="Clear" className="btn btn-primary"
+                     onClick={this.clear.bind(this)}/>
+                    <input type="button" value="Save" className="btn btn-success"
+                     onClick={this.save.bind(this)}/>
+                </div>
+                <br/>
+                    {this.state.message}
+                <hr/>
+                <h4>List of Departments</h4>
+                {/* {
+                    JSON.stringify(this.state.Departments)
+                } */}
+                <TableComponent dataSource={this.state.Departments}></TableComponent>
+            </div>
+        );
+    }
+}
+ 
+export default DepartmentRESTComponent;
+```
+                    - in componentWillUnMount() do the following
+                        - release events
+                        - release async / pomise subscriptions this will result in
+                             - Handling Memory Leaks    
+                        - the following code will provide the Lifecycle by removeing memory leaks    
+```  javascript
+import React, { Component } from 'react'
+
+class LifecycleComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {  
+            value:0
+        };
+        console.log(`COnstructor of the Parent is executed`);
+    }
+    updateValue=(evt)=>{
+        this.setState({value:parseInt(evt.target.value)});
+    }
+    componentDidUpdate=()=>{
+        console.log(`Compoennt did update on Parent Component is invoked`);
+    }
+    render() { 
+        console.log(`Rendering of Parent Component`);
+        if(this.state.value % 2 ===0){
+            return(
+                <div className="contaier">
+                    <h1>The Parent Component</h1>
+                    <input type="text" value={this.state.value}
+                     onChange={this.updateValue.bind(this)}/>
+                     <strong>Showing Even Component</strong>
+                     <EvenComponent></EvenComponent>
+                </div>
+            );
+        } else {
+        return (  
+            <div className="contaier">
+                 <div className="contaier">
+                    <h1>The Parent Component</h1>
+                    <input type="text" value={this.state.value}
+                     onChange={this.updateValue.bind(this)}/>
+                      <strong>Showing Odd Component</strong>
+                     <OddComponent data={this.state.value}></OddComponent>
+                </div>
+            </div>
+        );
+     }
+    }
+}
+
+
+class EvenComponent extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            x:0,
+            y:0
+        };
+
+        console.log(`Even Component Constructor called`);
+
+        // subscribing the event for global object (window) object
+        // ins constructor
+        // this will generate runtime Warnings for BUGS because the
+        // constrctorm only executes the COmponent intialization bu the
+        // component mounting(?) is still  not completed 
+       // window.addEventListener('mousemove', this.getMousePositions);
+    }
+
+    componentDidMount=()=>{
+        console.log(`Even Component Did Mount`);
+        window.addEventListener('mousemove', this.getMousePositions);
+    }
+
+    // will be invoked for each state / props changes
+    componentDidUpdate=()=>{
+       console.log(`Even Component Did Update is invoked`);
+    }
+
+    componentWillUnmount=()=>{
+        console.log(`Even Component is unmounted`);
+        // release all event handlers
+        window.removeEventListener('mousemove', this.getMousePositions);
+    }
+    getMousePositions=(evt)=>{
+        this.setState({x:evt.clientX});
+        this.setState({y:evt.clientY});
+        console.log(`Mouse Move x=${this.state.x} && y=${this.state.y}`);
+    }
+
+    render(){
+        console.log(`Rendering of Even Component`);
+       return( <div className="container">
+            <strong>
+                x = {this.state.x} and y = {this.state.y}
+            </strong>
+        </div>); 
+    }
+}
+
+class OddComponent extends Component {
+    constructor(props){
+        super(props);
+        console.log(`COnstructor of Odd COmponent is invoked`);
+    }
+    // will be invoked for each state / props changes
+    componentDidUpdate=()=>{
+        console.log(`Odd Component Did Update is invoked`);
+     }
+
+     componentDidMount=()=>{
+        console.log(`Odd Component Did Mount`);
+        
+    }
+
+     componentWillUnmount=()=>{
+        console.log(`Odd Component is unmounted`);
+    }
+    render(){
+        console.log(`Render of Odd Component in Invoked`);
+        return (
+            <div className="container">
+                <strong>
+                    Value Received from Parent = {this.props.data}
+                </strong>
+            </div>
+        );
+    }
+}
+ 
+export default LifecycleComponent;
+```
+                 
+                - Handling the Redering Exceptions
+                    - hande execptions for all childre using 'componentDidCatch()' hook 
+                        - Implementing the componentDidCatch() to handle exceptions in any child cpomponent in teh component tree using a static property named getDerivedStateFromError()
+                            - This property will listen the conponent that causes exceptions during rendering and for that component it creates a fallback UI    
+``` javascript
+import React, { Component } from 'react';
+
+class ErrorBoundryComponent extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            errorMessage:''
+        };
+    }
+
+    // this property will be invoked by rendering thread of the component
+    // to notify the exception thrown by any child component
+    // this property will implicitely set the state of the errorMessage of the current component
+    static getDerivedStateFromError(error){
+        return {
+            errorMessage:error.toString()
+        }
+    }
+
+
+    // parameter 1: Error That will be listened by this Component
+    // parameter 2: the Error Log that will have an access to stack trace for the component that has thrown error
+    // parameter 2 is of the type Exception that has property 'componentStack' which is a stach trace   
+    componentDidCatch=(error, logInfo)=>{
+        console.log(error.toString(), logInfo.componentStack);
+    }
+    // render the fallback UI 
+    render(){
+        if(this.state.errorMessage){
+            // return the fallback UI
+            return(
+                <div className="container">
+                     <h3>Some Error is Opccured</h3>
+                     <strong>
+                         {
+                             this.state.errorMessage
+                         }
+                     </strong>
+                </div>
+            );
+        }
+        // oterwise keep rendering children components
+        return this.props.children;
+    }
+}
+
+
+class MyCounterComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {  
+            counter:0
+        };
+    }
+    increament=()=>{
+        this.setState({counter: this.state.counter +1});
+       
+    }
+    render() { 
+      
+            if(this.state.counter > 10) {
+                throw new Error('Counter Has Exceeds its limit');
+            } else{
+                return (  
+                    <div className="container">
+                        <strong>
+                            The Counter Value = {this.state.counter}
+                        </strong>
+                        <br/>
+                        <input type="button" value="Increaent"
+                         onClick={this.increament.bind(this)}/>
+                    </div>
+                );
+            }
+    }
+}
+
+class ContainerForErrorBoundryComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {  };
+    }
+
+    reload=()=>{
+        // reload or refresh the same page
+        window.history.go(0);
+    }
+    render() { 
+        return (  
+            <div className="container">
+                {/* Render all children components inside the context of Error Boundry Component */}
+                <ErrorBoundryComponent>
+                     <MyCounterComponent></MyCounterComponent>
+                </ErrorBoundryComponent>
+                <hr/>
+                <input type="button" value="Reload"
+                 onClick={this.reload.bind(this)}/>
+            </div>
+        );
+    }
+}
+ 
+export default ContainerForErrorBoundryComponent;
+ 
+
+
+
+```
+            - Working with UI Validations
+``` javascript
+import React, { Component } from 'react'
+
+
+class ValidationFormComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {  
+            DeptNo:0,
+            DeptName:'',
+            isDeptNoValid:true,
+            isDeptNameValid:true,
+            isFormValid:false
+        };
+
+    }
+
+    handleChange=(evt)=>{
+        this.setState({[evt.target.name]:evt.target.value});
+        this.validateForm(evt.target.name,evt.target.value);
+    }
+
+    validateForm=(name,value)=>{
+        if(name === "DeptNo"){
+            if(parseInt(value) < 0 || value.length > 5){
+                this.setState({isDeptNoValid:false});
+                this.setState({isFormValid:false});
+            } else {
+                this.setState({isDeptNoValid:true});
+                this.setState({isFormValid:true});
+            }
+        }
+        if(name === "DeptName"){
+            if(value.length ===0 || value.length > 20){
+                this.setState({isDeptNameValid:false});
+                this.setState({isFormValid:false});
+            }else {
+                this.setState({isDeptNameValid:true});
+                this.setState({isFormValid:true});
+            }
+        }
+    }
+
+    save=()=>{
+        // 
+        
+    }
+    render() { 
+        return (  
+            <div className="container">
+             <form onSubmit={this.save.bind(this)}>    
+                <div className="form-group">
+                    <label>DeptNo</label>
+                    <input type="text" name="DeptNo" value={this.state.DeptNo} onChange={this.handleChange.bind(this)}  className="form-control"
+                     />
+                     <div className="alet alert-danger"
+                      hidden={this.state.isDeptNoValid}>
+                         DeptNo is invalid
+                     </div>
+                </div>
+                <div className="form-group">
+                    <label>DeptNmae</label>
+                    <input type="text" name="DeptName" value={this.state.DeptName} onChange={this.handleChange.bind(this)}  className="form-control"
+                     />
+                      <div className="alet alert-danger"
+                      hidden={this.state.isDeptNameValid}>
+                         DeptName is invalid
+                     </div>
+                </div>
+                <div className="form-group">
+                    <input type="submit" value="Submit" disabled={!this.state.isFormValid}/>
+                </div>
+            </form>
+           </div> 
+        );
+    }
+}
+ 
+export default ValidationFormComponent;
+```
+
+    - the Axios Calls
+``` javascript
+import axios from 'axios';
+
+class DepartmentHttpService {
+    constructor(){
+        this.url = 'http://localhost:9001/api/departments';
+    }
+
+    getData(){
+        let response = axios.get(this.url);
+        return response;
+    }
+
+    getDataById(id){
+        let response = axios.get(`${this.url}/${id}`);
+        return response;
+    }
+    postData(dept){
+        let response = axios.post(this.url,dept, {
+            headers:{
+                'Content-Type':'application/json'
+            }
+        });
+        return response;
+    }
+    putData(id,dept){
+        let response = axios.put(`${this.url}/${id}`,dept, {
+            headers:{
+                'Content-Type':'application/json'
+            }
+        });
+        return response;
+    }
+
+    deleteData(id){
+        let response = axios.delete(`${this.url}/${id}`);
+        return response;
+    }
+}
+
+export default DepartmentHttpService;
+```
+
+ - secure cals
+
+ ``` javascript
+import axios from 'axios';
+
+export class SecureHttpCallService {
+    constructor(){
+        this.url = "http://localhost:9002";
+    }
+
+    registerUser(user){
+        let response = axios.post(`${this.url}/api/app/register`, user,{
+            headers:{
+                'Content-Type':'application/json'
+            }
+        });
+        return response;
+    }
+    authUser(user){
+        let response = axios.post(`${this.url}/api/app/auth`, user,{
+            headers:{
+                'Content-Type':'application/json'
+            }
+        });
+        return response;
+    }
+    getData(token){
+        let response = axios.get(`${this.url}/api/app/get`, {
+            headers:{
+                'AUTHORIZATION': `bearer ${token}`
+            }
+        });
+        return response;
+    }
+}
+ ```
+
+    - secure call component
+
+ ``` javascript
+ import React, { Component } from 'react';
+import { SecureHttpCallService } from "./../../../services/securecallservice";
+import TableComponent from './../../reusablecomponents/tablecomponent';
+class SecureAccessComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { 
+            departments:[],
+            message:''
+         };
+         this.serv  =new SecureHttpCallService();
+    }
+
+    createNewUser=()=>{
+        const user ={
+            Id:1,
+            UserName: 'mahesh',
+            Password: 'mahesh',
+            Email:'mahesh@msit.com'
+        };
+        this.serv.registerUser(user).then((response)=>{
+            this.setState({message: response.data.message});
+        }).catch((error)=>{
+            this.setState({message: `Error Occured ${error}`});
+        });
+    };
+
+    authenticateUser=()=>{
+        const user ={
+            UserName: 'mahesh',
+            Password: 'mahesh',
+        };
+        this.serv.authUser(user).then((response)=>{
+            this.setState({message: response.data.response});
+            // save the token is sessionStorage
+            sessionStorage.setItem("token", response.data.token);
+        }).catch((error)=>{
+            this.setState({message: `Error Occured ${error}`});
+        });
+    };
+
+    getData=()=>{
+        let token = sessionStorage.getItem('token');
+        this.serv.getData(token).then((response)=>{
+            this.setState({departments:response.data.response});
+            this.setState({message: 'Data Received Successfully'});
+        }).catch((error)=>{
+            this.setState({message: `Error Occured ${error}`});
+        });
+    };
+
+    render() { 
+        return ( 
+            <div className="container">
+                <input type="button" value="Create User" className="btn btn-primary" onClick={this.createNewUser.bind(this)}/>
+                <hr/>
+                <input type="button" value="Auth User" className="btn btn-success"
+                onClick={this.authenticateUser.bind(this)}/>
+                <hr/>
+                <input type="button" value="Get Data" className="btn btn-warning"
+                 onClick={this.getData.bind(this)}/>
+                <br/>
+                <strong>
+                    {this.state.message}
+                </strong>
+                <hr/>
+                <TableComponent dataSource={this.state.departments}></TableComponent>
+            </div>
+         );
+    }
+}
+ 
+export default SecureAccessComponent;
+
+
+ ```
+
+
     - Using External CSS in COmponent e.g. Bootstrap
         - npm install --save bootstrap
         - Imports the CSS from the CSS library / Framework in index.js e.g.
@@ -398,6 +1083,14 @@ export default DropDownComponent;
                 - Standard Component's lifecycle for Coamponent management (loading / Virtual DOM / Props and State anagement / Event handling)       
 
 # Hands-on-Labs
-Date:03-May-2021
+# Date:03-May-2021
 1. Create Calculator using React that looks like Calculator on Windows OS with Scientific Calculator Suport e.g. Sig/Cos/Tan/Power/Sqrt/Fibo, ect
 2. Create a Master Component that will show a comboboxes with list of Categories and List of Manufactirers. There must be a Table Chaild component which will be generated based on Products Array with properties as ProductRowId, ProductId,ProductName,CategoreyName, Manufacturer, BasePrice, ect. When a Categorey is selected from Category Combobox the table shold show products matching with categories ans same bechavior for the Manufacturers Combobox 
+
+# Date : 04-May-2021
+
+1. Create a Custom Component that will be used to create validation summary to show all error messages occred in the component where it is used. When the element have valid value, the error message from the ValidationSummary must be removed
+2. Make sure that, when the Component is rendered, all mandatory fileds must be having red start (*) next to it indicating that the field is mandatory.
+3. Complete class components for Category, SubCategory with its node.js service for CRUD oeprations 
+4. Write a custom Validator to make sure that the CategoryId, SubCategoryId are not already exist. Validate this immediately when end-user come out of the Currespoding Textbox for CategoryId and SubCategoryId. (NOte: Make this reusable validator) 
+5. Create a component for Register User, Login user

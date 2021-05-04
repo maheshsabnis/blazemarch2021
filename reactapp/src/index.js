@@ -10,7 +10,12 @@ import MessageComponent from './components/StatefullComponents/messageComponent'
 import reportWebVitals from './reportWebVitals';
 import BasicCalculatorComponent from './components/BasicCalculator/basicCalculatorComponent';
 import ProductComponent from './components/productcomponent/productComponent';
-
+import LifecycleComponent from './components/LifecycleeHooks/ConditionalComponents/MouseMoveComponent';
+import DepartmentRESTComponent from './components/LifecycleeHooks/callRESTComponent/departmentRESTComponent';
+import ContainerComponent from './components/LifecycleeHooks/ErrorHandlingCompoents/ErrorConditionComponent';
+import ContainerForErrorBoundryComponent from './components/LifecycleeHooks/ErrorHandlingCompoents/ErrorBoundryComponent';
+import ValidationFormComponent from './components/validations/ValidationComponent';
+import SecureAccessComponent from './components/LifecycleeHooks/callRESTComponent/secureaccesscomponent';
 let message = 'This is the Message from the Parent';
 
 let newmessage = 'This is the New Message from the Parent';
@@ -19,7 +24,7 @@ let newmessage = 'This is the New Message from the Parent';
 // in HTML element with id as 'root'
 ReactDOM.render(
   <React.StrictMode>
-    <ProductComponent />
+    <SecureAccessComponent/>
   </React.StrictMode>,
   document.getElementById('root')
 );
