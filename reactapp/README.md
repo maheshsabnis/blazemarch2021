@@ -1049,7 +1049,440 @@ export default SecureAccessComponent;
         - Imports the CSS from the CSS library / Framework in index.js e.g.
             - import './node_modules/....../XXXX.css'      
 2. React with Functional Components (Phase 2)
+    - The functional component cane be created using one of the following syntax
+        - JS Function that returns HTML DOM
+
+ ``` javascript
+ import React from 'react';
+
+function SimpleFuncationalComponent(){
+    return(
+        <div className="container">
+            <h2>The Functional Component</h2>
+        </div>
+    );
+}
+
+export default SimpleFuncationalComponent;
+
+ ```
+            - The functional component can directly accept props from the parent component as like Class Components
+``` javascript
+import React from 'react';
+
+function SimpleFuncationalComponent(props){
+    return(
+        <div className="container">
+            <h2>The Functional Component</h2>
+            <strong>
+                Value Receied from Parent  = {props.msg}
+            </strong>
+        </div>
+    );
+}
+
+export default SimpleFuncationalComponent;
+```
+        - using the constant Function Expression
+            - Constant Expression implicitely diagesting the HTML DOM
+``` javascript
+
+// constant Expression having DOM in it
+// cann be used like a stateless component
+const ExpressionComponentDiagestingDOM=(props)=>(
+    <div>
+        <h2>constant Expression having DOM in it</h2>
+        <strong>
+            {props.val} && {props.val1}
+        </strong>
+        
+    </div>
+);
+
+// the component that will accept multiple properties
+// seperated by comma instead of using 'props'
+// these parameters will be treated as context values
+// passed by the parent of the current component
+const ExpressionWithDirectPropertisWithoutPropsComponentDiagestingDOM=({val,val1})=>(
+    <div>
+        <h2>the component that will accept multiple properties seperated by comma instead of using 'props'</h2>
+        <strong>
+            {val} && {val1}
+        </strong>
+    </div>
+);
+
+```
+
+            - Constant Expression that return DOM 
+``` javascript
+// constant expression that returns DOM like a functional component
+// heavily used syntax for using Function Component with State, Props, Context with hooks for Production
+const ExpressionDOMReturningComponent=({v1,v2})=>{
+    return (
+        <div>
+            <h2>The DOM Returing Expression Component</h2>
+            <strong>
+            {v1} && {v2}
+        </strong>
+        </div>
+    );
+};
+
+
+```
+                   - Using Event Binding 
+``` javascript
+// constant expression that returns DOM like a functional component
+// heavily used syntax for using Function Component with State, Props, Context with hooks for Production
+// the contents of Function component are by default belong to the function itself that's why they can be directly ing to HTML eleemnts for showing data and executed with events of DOM elements 
+const ExpressionDOMReturningComponent=({v1,v2})=>{
+    const clickMe=()=>{
+        alert('Button is Clicked');
+    }
+    return (
+        <div>
+            <h2>The DOM Returing Expression Component</h2>
+            <strong>
+            {v1} && {v2}
+        </strong>
+        <hr/>
+        <button onClick={clickMe}>Click Me</button>
+        </div>
+    );
+};
+
+```
+
     - Using Standard Hooks
+        - Hooks can be used only at component level. They cannot be called inside a function. 
+            - The standard hooks can be called inside the custom hook function 
+        - basic Hooks used for Production
+            - useState(initialState, DispatchActio<newstate>)
+                - Hook used for defining local state to the component
+                - initialState
+                    - the initial state of the component
+                - DispatchActio<newstate>
+                    - the callbak method that will be used to mutate (or change / modify) the initialState to the newstate
+                        - DispatchAction represent an event that will be raised on UI which causes the state property to be mutated
+                - syntax (ES 6 destructuring)
+                    - const [v,setV] = useState(0);
+                        - v is the state property having initial value as 0
+                        - setV is the callback function that will be used to mutate 'v' to new state value
+``` javascript
+import React, { useState } from 'react';
+
+const SimpleCalculatorComponent=()=>{
+  // declare state
+  
+  const [x,setX] = useState(0);
+  const [y,setY] = useState(0);
+  const [res,setRes] = useState(0);
+
+  const add=()=>{
+      setRes(x+y);
+  }
+  const clear=()=>{
+      setX(0);
+      setY(0);
+  }
+  return (
+    <div className="container">
+    <div className="form-group">
+        {/* onChange={(evt)=> setX(parseInt(evt.target.value))} will update the init value of x to next new value entered in text element based on change event */}
+        <label>Num1</label>
+        <input type="text" className="form-control"
+         value={x} name="num1" onChange={(evt)=> setX(parseInt(evt.target.value))}/>
+    </div>
+    <div className="form-group">
+        <label>Num2</label>
+        <input type="text" className="form-control"
+        value={y} name="num2"  onChange={(evt)=> setY(parseInt(evt.target.value))}/>
+    </div>
+    <div className="form-group">
+        <label>Result</label>
+        <input type="text" className="form-control"
+        value={res} readOnly/>
+    </div>
+    <div className="form-group">
+       <input type="buttont" className="btn btn-primary" value="clear"
+        onClick={clear}/>
+       <input type="buttont" className="btn btn-success" value="add"
+         onClick={add}/>
+    </div>
+</div>
+  );
+};
+
+export default SimpleCalculatorComponent;
+
+```
+
+the state component withe the complex object
+``` javascript
+import React from 'react';
+
+const TableComponent=(props)=>{
+    if(props.dataSource === undefined || props.dataSource.length === 0){
+        return (
+            <div className="container">No Recrds to show</div>
+        );
+    } else {
+    return (  
+        <div className="container">
+            <table className="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        {
+                            Object.keys(props.dataSource[0]).map((col,idx)=>(
+                                <th key={idx}>{col}</th>
+                            ))
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                     {
+                         props.dataSource.map((rows,index)=>(
+                            <tr key={index}>
+                                {
+                                  Object.keys(props.dataSource[0]).map((col,idx)=>(
+                                    <th key={idx}>{rows[col]}</th>
+                                ))  
+                                }
+                            </tr>
+                         ))
+                     }       
+                </tbody>
+            </table>
+        </div>
+       
+      );
+   }
+};
+
+export default TableComponent;
+
+
+import React, { useEffect, useState } from 'react'
+import TableCompponent from './../reusablecomponent/tablecomponentwithpros';
+const DepartmentHookComponent=()=>{
+
+    const [dept, setDept] = useState({DeptNo:0,DeptName:'',Location:'',Capacity:0});
+    const [departments, updateDepartments] = useState([]);
+
+    const clear=()=>{
+        setDept({DeptNo:0,DeptName:'',Location:'',Capacity:0});
+    };
+
+    const save=()=>{
+        // the state mutation of departments object by pushing the new 'dept' in it
+        updateDepartments([...departments,dept]);
+    };
+
+    return (  
+        <div className="container">
+            <div className="form-group">
+                <label>DeptNo</label>
+                <input type="text" name="DeptNo" value={dept.DeptNo} onChange={(evt)=> setDept({...dept, DeptNo:parseInt(evt.target.value)})}  className="form-control"/>
+            </div>
+            <div className="form-group">
+                <label>DeptNmae</label>
+                <input type="text" name="DeptName" value={dept.DeptName} onChange={(evt)=> setDept({...dept, DeptName:evt.target.value})}  className="form-control"/>
+            </div>
+            <div className="form-group">
+                <label>Location</label>
+                <input type="text" name="Location" value={dept.Location} onChange={(evt)=> setDept({...dept, Location:evt.target.value})}  className="form-control"/>
+            </div>
+            <div className="form-group">
+                <label>Capacity</label>
+                <input type="text" name="Capacity" value={dept.Capacity} onChange={
+                    (evt)=> setDept({...dept, Capacity:parseInt(evt.target.value)})
+                }  className="form-control"/>
+            </div>
+            <div className="form-group">
+                <input type="button" value="Clear" className="btn btn-primary"
+                 onClick={clear}/>
+                <input type="button" value="Save" className="btn btn-success"
+                 onClick={save}/>
+            </div>
+            <br/>
+            
+            <hr/>
+            <h4>List of Departments</h4>
+             <TableCompponent dataSource={departments}></TableCompponent>   
+        </div>
+        );
+};
+
+export default DepartmentHookComponent;
+```
+
+
+
+            - useContext()
+                - The object that will be used to pass specific values from parent to child
+                - Once the parent and also a child is unloaded the Context will be cleared 
+                - Define a COntext with inital schema
+                    - the  'createContext()' method from the 'react' package
+                        - const mycontext = createContext(INITIAL-VALUE);
+                - The Parent Component must use the 'provider' property of the context to provide value to child
+                    - <mycontext.provider value={}></mycontext.provoder> 
+                        - the 'value' is a Complex Object Literal
+                            - value={p1}
+                                - p1 can be data or callback function
+                            - value = {{p1,p2}}    
+                                - p1 can be data and p2 an be callback function  
+                    - <mycontext.provider value={}>
+                        <ChildComponent/>
+                    </mycontext.provoder>    
+                    - the ChildComponent has to subscribe to context and read provided values by the parent
+                        - the 'useContext(context)' hook will be used to provide the subscription to the context by the child component    
+                        - The child compoent can retrived values from the context and procees them    
+``` javascript
+ // datacontext
+import { createContext } from "react";
+// defining the context with initial value
+export const DataContext = createContext(null);
+
+// tablecomponent using context
+import React, {useContext} from 'react';
+import {DataContext} from './../datacontext';
+
+const TableComponentContext=()=>{
+
+    // subscribe to the DataContext using the 'useContext' hook and read the values from it
+    const dataSource = useContext(DataContext); 
+
+    if(dataSource === undefined ||dataSource.length === 0){
+        return (
+            <div className="container">No Recrds to show</div>
+        );
+    } else {
+    return (  
+        <div className="container">
+            <table className="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        {
+                            Object.keys(dataSource[0]).map((col,idx)=>(
+                                <th key={idx}>{col}</th>
+                            ))
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                     {
+                         dataSource.map((rows,index)=>(
+                            <tr key={index}>
+                                {
+                                  Object.keys(dataSource[0]).map((col,idx)=>(
+                                    <th key={idx}>{rows[col]}</th>
+                                ))  
+                                }
+                            </tr>
+                         ))
+                     }       
+                </tbody>
+            </table>
+        </div>
+       
+      );
+   }
+};
+
+export default TableComponentContext;
+
+// table component using complex object in context
+
+import React, {useContext} from 'react';
+import {DataContext} from '../datacontext';
+
+const TableComponentContextEvent=()=>{
+
+    // subscribe to the DataContext using the 'useContext' hook and read the values from it
+    // the subscriber will have {departments,setDept}
+    // key 0 of subscriber will be departments
+    // key 1 of subscriber will be setDept 
+    const subscriber = useContext(DataContext); 
+    console.log(`The values in DataContext = ${JSON.stringify(subscriber)}`);
+    const dataSource  = subscriber[Object.keys(subscriber)[0]]; // array
+    const event = subscriber[Object.keys(subscriber)[1]]; // event
+
+    if(dataSource === undefined ||dataSource.length === 0){
+        return (
+            <div className="container">No Recrds to show</div>
+        );
+    } else {
+    return (  
+        <div className="container">
+            <table className="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        {
+                            Object.keys(dataSource[0]).map((col,idx)=>(
+                                <th key={idx}>{col}</th>
+                            ))
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    {/* event(rows) will pass the selected row's data with event callback and it will be emitted to the parent coponent */}
+                     {
+                         dataSource.map((rows,index)=>(
+                            <tr key={index} onClick={()=>event(rows)}>
+                                {
+                                  Object.keys(dataSource[0]).map((col,idx)=>(
+                                    <th key={idx}>{rows[col]}</th>
+                                ))  
+                                }
+                            </tr>
+                         ))
+                     }       
+                </tbody>
+            </table>
+        </div>
+       
+      );
+   }
+};
+
+export default TableComponentContextEvent;
+
+
+// send ing data from parent
+  <h4>List of Departments</h4>
+            {/* passing values to child component using Context */}
+            <DataContext.Provider value={departments}>
+                 <TableComponentContext></TableComponentContext> 
+            </DataContext.Provider>
+            <hr/>
+            {/* Passing Data and Callback to Context so that the value for the callback will be teceived from the child component through the context */}
+
+            <DataContext.Provider value={{departments,setDept}}>
+                <TableComponentContextEvent></TableComponentContextEvent>
+            </DataContext.Provider>
+
+
+
+```
+
+            - useEffect()
+                - Most important hook
+                    - This is the COmbination of 'componentDidMount()' and 'componentWinUnMount()'
+                    - USed to perform operations those are supposed to be executed during the compnent initialization
+                        - AJAX Calls
+                        - Event Subscriptions
+                - Syntax
+                    - useEffect(mounting operations callback, (optional but recommended) return unmounting operation callback, [dependency  array parameter]);
+                    - useEffect(()=>{}, return ()=>{}, []);
+                        - mounting operations callback
+                            - logic to be executed after the rendering has taken plcae e.g. AJAX calls, Event Subscription
+                        - unmounting operation callback
+                            - logic for releasing all subscriptions as well as all events subscriptions  
+                    - dependency  array parameter
+                        - Since the useEffect() will execute at component level, till the component is mounted in browser, this will keep on executing mounting logic which may result into the component crash or adding huge data in browser. So to prevent we need to pass the depednency array parameter to inform to useEffect() that thestate is change the rendering based on state is completed and now it can stop
+                            - generaly we pass an empty array [] as dependency parameter, this indicates any state property updates           
+        - More Hooks can be used for production (but not always useful)    
     - Creating Custom Hooks
     - Mamory Leaks handling using Hooks
     - React Routing          
@@ -1094,3 +1527,8 @@ export default SecureAccessComponent;
 3. Complete class components for Category, SubCategory with its node.js service for CRUD oeprations 
 4. Write a custom Validator to make sure that the CategoryId, SubCategoryId are not already exist. Validate this immediately when end-user come out of the Currespoding Textbox for CategoryId and SubCategoryId. (NOte: Make this reusable validator) 
 5. Create a component for Register User, Login user
+
+# Date : 05-May-2021
+
+1. Create a Products functional component, that will receive data from ProductsService (node+Express Service). This component should use the table component that will be provided with the Products data using Context. This table should show Products details in each row with its Image in the last column. Each Column must have the 'show details' link. When this link is clicked the 'Prouduct Detail' component should be displayed with all product details e.g.Manufacture, sellor, product specifications and other images of teh product e.g. Front View, Side View, etc. 
+2. This compone t must have a search textbox, that will provide the search feature to search the product based on Product NAme, Manufacturer or other details e.g. if Laptop is to searched then ente6 16GB in seach and the table must show all laptops having 16b GB ram from all manufacturers.

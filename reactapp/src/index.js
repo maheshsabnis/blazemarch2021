@@ -16,6 +16,10 @@ import ContainerComponent from './components/LifecycleeHooks/ErrorHandlingCompoe
 import ContainerForErrorBoundryComponent from './components/LifecycleeHooks/ErrorHandlingCompoents/ErrorBoundryComponent';
 import ValidationFormComponent from './components/validations/ValidationComponent';
 import SecureAccessComponent from './components/LifecycleeHooks/callRESTComponent/secureaccesscomponent';
+import SimpleFuncationalComponent from './hooks/simplefunctionalComponent';
+import SimpleCalculatorComponent from './hooks/statehook/simplecalculator';
+import DepartmentHookComponent from './hooks/statehook/departmentHookComponent';
+import ToggleCompoent from './hooks/useEffectApp/TooggleComponent';
 let message = 'This is the Message from the Parent';
 
 let newmessage = 'This is the New Message from the Parent';
@@ -24,7 +28,7 @@ let newmessage = 'This is the New Message from the Parent';
 // in HTML element with id as 'root'
 ReactDOM.render(
   <React.StrictMode>
-    <SecureAccessComponent/>
+    <ToggleCompoent/>
   </React.StrictMode>,
   document.getElementById('root')
 );
