@@ -10,6 +10,12 @@ class DepartmentHttpService {
         return response;
     }
 
+    getDataFromUrl(address){
+        let response = axios.get(address);
+        return response;
+    }
+
+
     getDataById(id){
         let response = axios.get(`${this.url}/${id}`);
         return response;

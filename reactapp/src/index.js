@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import {BrowserRouter} from 'react-router-dom';
+
 import './index.css';
 // imporing bootstrap CSS Library
 import './../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -20,6 +23,11 @@ import SimpleFuncationalComponent from './hooks/simplefunctionalComponent';
 import SimpleCalculatorComponent from './hooks/statehook/simplecalculator';
 import DepartmentHookComponent from './hooks/statehook/departmentHookComponent';
 import ToggleCompoent from './hooks/useEffectApp/TooggleComponent';
+import LazyComponent from './hooks/lazyload';
+import CustomHookComponet from './hooks/customhooks/customHookComponent';
+import ImportingComponent from './hooks/codesplitting/SimpleCompoent/importingComponent';
+import LazyLoadingComponent from './hooks/codesplitting/UsingComponents/LazyLoadingComponent';
+import MainContainerComponent from './routingapp/maincontainercomponent';
 let message = 'This is the Message from the Parent';
 
 let newmessage = 'This is the New Message from the Parent';
@@ -28,7 +36,9 @@ let newmessage = 'This is the New Message from the Parent';
 // in HTML element with id as 'root'
 ReactDOM.render(
   <React.StrictMode>
-    <ToggleCompoent/>
+    <BrowserRouter>
+      <MainContainerComponent/>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

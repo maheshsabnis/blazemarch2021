@@ -1483,9 +1483,82 @@ export default TableComponentContextEvent;
                         - Since the useEffect() will execute at component level, till the component is mounted in browser, this will keep on executing mounting logic which may result into the component crash or adding huge data in browser. So to prevent we need to pass the depednency array parameter to inform to useEffect() that thestate is change the rendering based on state is completed and now it can stop
                             - generaly we pass an empty array [] as dependency parameter, this indicates any state property updates           
         - More Hooks can be used for production (but not always useful)    
+            - useReducer()
+                - State Monitor of React Appication w/o using Redux
+                - Accept this as an alternative to useState()
+                    - Returs the current state of the proeprty along with the Action that is dispatched 
+                    - Use this hook when the State Property updates goes thorugh "complex state changes" based on "mutiple actions"
+            - useMemo()
+                - Memoization
+                - Recompute the memoized values when the depednency parameter (aks state) is updated in recursion 
+            - useCallback()
+                - Used to process the inline callback execution received from child to parent
+                    - Reuse the same memory for memoization that is computed by child in the parent 
+            - useRef()
+                - Provide the reference of the current HTML element to process it for reading and writing vaule.
+                - This is used along with the 'ref' attribute of HTML elements in React Component
+                    - the 'ref' is depricated because they are uncontrolled component (means does not wotk on state mutation)
     - Creating Custom Hooks
-    - Mamory Leaks handling using Hooks
+        - Used to oberride the the default behavior of the standard hooks by encapsulating them 
+    - Memory Leaks handling using Hooks
+    - Using React Compositional Pattern in App
+        - Create a Build and destribute it so that oter app can use it using CDN
+           - create a sigle js build file that contains all app dependencies and can be shared across other apps
+           - npm run build --prod
+                - not reusable, but available as in independent application for production
+        - Loading the component when the 'Code is Splitted' across multiple logical / reusable components and a component is delyed for mounting
+            -  React 16.8+, the 'Code Splitting' Concept
+                - Based on the ES 6 Modules
+                - Uses the File I/O based search for Modules inspired from Node.js Modle loaders
+                    - Uses Module Loaders of JavaScript App to search, load and cache module features
+                - The 'import' object        
+        - Code-Splitting with 'Lazy-Loading' of te component
+            - React.lazy() object
+                - Provides a lazy loading for the component dynaically and rdenr it inside a predefined 'Suspense' component
+                - React.lazy(()=>import(<PATH-OF-COMPONENT>))
+                    - import() returns the 'Promise' object,
+                    - the component exported from the <PATH-OF-COMPONENT> must have the 'default' export 
+                        - e.g. export default <COMPONENT> 
+                - <Suspense fallback={<RENDER-THE-FALLBACK-UI>}> untile the lazy component is not loaded
+                - Recomendation
+                    - Use the <Suspense>  under the error boundries                        
     - React Routing          
+        - React Boundries
+            - No defult support for Async HTTP Operation Inside React OM, instead use axios, fetch.
+            - No Support for Independent Destributable Modules, instead use the React Package creation for distribution
+            - No Support for SPA by default
+        - Modern Web App with Routing
+            - Use Third Party Route library or package and integarted it in React App
+        - using React Routing using 'react-router-dom'
+            - npm install --save react-router-dom    
+            - Object in the react-router-dom
+                - BrowserRouter
+                    - This is used to manage the Routing Object model for React Components inside the browser
+                        - Router.Provider
+                            - Manage the Naviation across all components using following objects
+                                - Switch
+                                    - Object that provide Route Dictionary
+                                    - Also executes Queries on Route Dictionary
+                                - Route
+                                    - Obejct for defining the Route URL in Route Dictionary 
+                                        - exact
+                                            - Read the Expression in the Url and accoring to it perform the path match
+                                        - path
+                                            - contains the URL
+                                            - E.g.
+                                                - path="/<URL>/:<parameter>"
+                                        - The 'history()' object managed by Route.Provider() will allows to provide the Parameter based as well as the URL Based explict navifatopn
+                                        - component
+                                            - The Component Reference to be instantiated and loaded based on 'path' used in query
+                                            - This component is mouneted in DOM Tree with its lifecycle (VERY-IMPORTANT)
+                                                - When navigation takes place from one component to another component, then the 'componentWillUnmount()' of preious component is executed    
+                                - Redirect
+                                    - Use to define 'default' redirection
+                                    - the 'to' property that uses the 'path' from Route to redirect to default routing when no path is found       
+                                - Link
+                                    - Object used to query to dictionary for link based navigation like anchor tag
+                                        - the 'to' property, that accepts the path to query tp the dictionary                  
+
 3. React with Redux (Phase 3)
     - Creating Redux App for State Managemenent
     - Using Middlewares for Async Calls Management usign Redux Apps
@@ -1532,3 +1605,25 @@ export default TableComponentContextEvent;
 
 1. Create a Products functional component, that will receive data from ProductsService (node+Express Service). This component should use the table component that will be provided with the Products data using Context. This table should show Products details in each row with its Image in the last column. Each Column must have the 'show details' link. When this link is clicked the 'Prouduct Detail' component should be displayed with all product details e.g.Manufacture, sellor, product specifications and other images of teh product e.g. Front View, Side View, etc. 
 2. This compone t must have a search textbox, that will provide the search feature to search the product based on Product NAme, Manufacturer or other details e.g. if Laptop is to searched then ente6 16GB in seach and the table must show all laptops having 16b GB ram from all manufacturers.
+
+# Day: 06-May-2021
+
+1.Integrate the Routing for the Application of eCommerse with the following workflow
+    - The ProductList COmponent with Search Facility should be avaiable for Anonymous User
+        - The User should be able to search product and can see Product Details will images
+    - There should be a link provided to Register te User
+        - The Use Can Register as Vendor or Customer    
+    - There must exist Link to Authenticate the User
+        - If the Login User Role is Customer, then this user can access following Views
+            - Select Products to Purchase
+            - Can Place Order
+            - Can View Order
+            - Can Update Order by Adding/Updating/Deleting Order Items
+            - Can access the Payment View
+            - The Customer user aftre login can see all orders placed by him/her in past  
+                - The Delivered Order can not be edited
+            - Once the Customer Place the order for the product, its quantity must be reduced by Products Inventory
+                - If the Product Quantity is zero, the in Product Search the View must show Procuct details with message as currently not available
+        - If the login user is Vendor, then this user can upload products and product quantity can be added                        
+            - The Vendor can be provoded message that the order is placed for products added by him
+            - The Vewndor can delete / Update Product Info
