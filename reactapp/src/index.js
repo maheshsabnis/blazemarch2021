@@ -1,44 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {BrowserRouter} from 'react-router-dom';
+ // import 'createStore()'
+ import { createStore } from "redux";
+
+ // import Provider
+
+ import { Provider } from "react-redux";
 
 import './index.css';
 // imporing bootstrap CSS Library
 import './../node_modules/bootstrap/dist/css/bootstrap.min.css';
-// import App from './App';
-import FirstSimpleComponent from './components/StatelessComponent/firstSimpleComponen';
 
-import MessageComponent from './components/StatefullComponents/messageComponent';
+// import reducer
+import { rootReducer } from "./reduxapp/reducers/index";
+
+ 
 import reportWebVitals from './reportWebVitals';
-import BasicCalculatorComponent from './components/BasicCalculator/basicCalculatorComponent';
-import ProductComponent from './components/productcomponent/productComponent';
-import LifecycleComponent from './components/LifecycleeHooks/ConditionalComponents/MouseMoveComponent';
-import DepartmentRESTComponent from './components/LifecycleeHooks/callRESTComponent/departmentRESTComponent';
-import ContainerComponent from './components/LifecycleeHooks/ErrorHandlingCompoents/ErrorConditionComponent';
-import ContainerForErrorBoundryComponent from './components/LifecycleeHooks/ErrorHandlingCompoents/ErrorBoundryComponent';
-import ValidationFormComponent from './components/validations/ValidationComponent';
-import SecureAccessComponent from './components/LifecycleeHooks/callRESTComponent/secureaccesscomponent';
-import SimpleFuncationalComponent from './hooks/simplefunctionalComponent';
-import SimpleCalculatorComponent from './hooks/statehook/simplecalculator';
-import DepartmentHookComponent from './hooks/statehook/departmentHookComponent';
-import ToggleCompoent from './hooks/useEffectApp/TooggleComponent';
-import LazyComponent from './hooks/lazyload';
-import CustomHookComponet from './hooks/customhooks/customHookComponent';
-import ImportingComponent from './hooks/codesplitting/SimpleCompoent/importingComponent';
-import LazyLoadingComponent from './hooks/codesplitting/UsingComponents/LazyLoadingComponent';
-import MainContainerComponent from './routingapp/maincontainercomponent';
-let message = 'This is the Message from the Parent';
+import MainReduxContainerComponent from './reduxapp/MainReduxContainerComponent';
 
-let newmessage = 'This is the New Message from the Parent';
-
-// the render() method of the ReactDOM will mount the component
-// in HTML element with id as 'root'
+// create a store
+let store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__());
+ 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <MainContainerComponent/>
-    </BrowserRouter>
+    {/* the Redux COntext is created with store to manage the react-redux execution for all react components those are using dispatch, store connect using selector, etc*/}
+    <Provider store={store}>
+       <MainReduxContainerComponent></MainReduxContainerComponent>
+    </Provider>
+    
   </React.StrictMode>,
   document.getElementById('root')
 );

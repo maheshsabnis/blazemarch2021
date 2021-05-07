@@ -1561,6 +1561,57 @@ export default TableComponentContextEvent;
 
 3. React with Redux (Phase 3)
     - Creating Redux App for State Managemenent
+    - Action 
+        - Function that will be dispatched from UI and will contains data posted from UI
+        - This will use the ActionCreator to execute action logic 
+    - ActionCreator
+        - Based on Input action, the oute action will be generated with output data
+        - This indicates what has happened  
+    - Reducer
+        - This will monitor all actions being dispatched under the Redux Context(?)
+        - Redux-Context, is an object Model that manages execution of React Aplication with Redux Store, Actions, Reducers and Middlewares
+            - All React Components must be executed under the Redux Context
+        - Practically, Reducer is a JavaScript 'Pure Function' means the input parameters and output parameter are same
+            - Input parameter is initial State in Store, and the output parameter is the next/modified State to be commited in store     
+    - Store
+        - The Application State Container for storing data posed by each component as well as data required by each component
+        - The Component's lifecycle is executed under the scope of the Store (Redux-Context)
+    - Middleware
+        - Used for Asyn calls
+    - redux package
+        - npm install --save redux
+        - createStore(<REDUCER>, <OBEJCT-ENHANCER>)
+            - Method used to create a STORE object
+            - REDUCER is an object that is used to monitor the state updates in store based on action
+            - OBEJCT-ENHANCER
+                - the additional information required by the store
+                    - The Middleware Configuration in case when action(s) perform Asynchornous operations
+                    - The REDUX-TOOLS-EXTENSIONS used to simulate the redux execution in browser's developer tools (NOT-RECOMMENDED-IN-PRODUCTION)
+        - combineReducer()
+            - Its an aggrigation of all reducers functions in the application that will passed to createStore() method
+    - react-redux package
+        - npm install --save react-redux
+        - <Provider>
+            - A component, that has the 'store' property which accpets store created using 'createStore()' method
+            - this component manage an execution of all react components inside it by providing the 'Redux-Context'
+            - <Provider store={<store>}>  <REACT-COMPONENT/>   </Provider>     
+        - The 'connect(p1,p2)' method (traditional method of React-Redux)
+            - Connects the React Component with Store (aka Component's subscription with Store)    
+            - Allows to Read the State from Store and Show in it component
+                - Use  'mapStateToProps' object this is 'p1' parameter, used to map the data fro store to props of the component
+                    - State is the state from Store
+                    - props is props object of the component to show data in component
+            - Allows to dispatch an action from component based on event and make the action to execute  
+                - Use 'mapDispatchToProps' object, this is 'p2', used to map an event of the compoenent with 'dispatch' object to dispatch an action  
+                    - dispatch, is the object provided by Redux-Context to make a request to an action based on event on Compoenent, e.g. onClick, onChange, etc.
+                    - using 'props' the function for the event will be mapped with dispatch object
+        - React 16.8 with Redux 4.x, the react-redux 7.x supports new hooks to replace 'connect()' method
+            - the 'useDispatch()'
+                - replacement of 'mapDispatchToProps'     
+            - the 'useSelector()'
+                - replacement of 'mapStateToProps'            
+
+
     - Using Middlewares for Async Calls Management usign Redux Apps
 4. Testing of React Apps (Phase 4)
     - Component's Rendeing Testing using Data
@@ -1627,3 +1678,16 @@ export default TableComponentContextEvent;
         - If the login user is Vendor, then this user can upload products and product quantity can be added                        
             - The Vendor can be provoded message that the order is placed for products added by him
             - The Vewndor can delete / Update Product Info
+
+# Date : 07-May-2021
+
+1. Perform the following operations using the Redux State management
+    - Make sure that when the row s selected from the table of Department list, the department details are shown in the CreateDeptComponent. The end-use can update department details and click on the sabe button, these details are added back to store and shown in the ListDeptsComponent again.
+    - Remove the Department recrd from the store when the delete action is dispatched from the ListDeptsComponent
+    - Provide the seacrh action to search records from the store based on locations
+2. Create a SeachComponent which will search, records from store for Deparments, Employees e.g. 
+    - The Store contains Departments and Employees reords
+    - A Single Search component should be able to  perform search based on EmpName, Designation, DeptName, Location etc.
+        - E.g. Search All Employess by DeptName
+        - Search All Employyes by Location
+        - Search All Employees by Designation     
