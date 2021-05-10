@@ -1,8 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
- // import 'createStore()'
- import { createStore } from "redux";
+ // import 'createStore()' and the middleware using 'applyMiddleware()' function, and the compose()
+ // applyMiddleare() will be used to load the middleware in store
+ // compose(), the method that will implement the parameter enhancer tio enhance the createStore() 
+ // using REDUX_DEV_TOOLS and middleware
+ import { createStore, applyMiddleware, compose } from "redux";
+// import the sagaMiddleware object using createSagaMinndeware
+
+import createSagaMinndeware from 'redux-saga';
+
 
  // import Provider
 
@@ -13,20 +20,35 @@ import './index.css';
 import './../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 // import reducer
-import { rootReducer } from "./reduxapp/reducers/index";
+import reducer from "./sagaapp/reducers/index";
 
+// import the saga generator function
+import rootSaga from './sagaapp/sagas/index';
  
 import reportWebVitals from './reportWebVitals';
-import MainReduxContainerComponent from './reduxapp/MainReduxContainerComponent';
+// importing the saga component
+import MainSagaComponent from './sagaapp/mainsagacomponent';
 
-// create a store
-let store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__());
+// initialize the sala middleware
+
+const sagaMiddleware = createSagaMinndeware();
+
+// create a parameter enhancer object
+// the mandatory object specified as  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+// compose represents any othe additional parameter to be pased to the createStore() e.g. middleware 
+const parameterEnhancer =  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+// create a store using reducer and Saga Middleware
+let store = createStore(reducer, parameterEnhancer(applyMiddleware(sagaMiddleware)));
  
+// modify the sagaMiddlere object with its 'run()' method to keep running the rootSaga
+sagaMiddleware.run(rootSaga);
+
 ReactDOM.render(
   <React.StrictMode>
-    {/* the Redux COntext is created with store to manage the react-redux execution for all react components those are using dispatch, store connect using selector, etc*/}
+    {/* the Redux COntext with middleware is created with store to manage the react-redux execution for all react components those are using dispatch, store connect using selector, etc*/}
     <Provider store={store}>
-       <MainReduxContainerComponent></MainReduxContainerComponent>
+       <MainSagaComponent></MainSagaComponent>
     </Provider>
     
   </React.StrictMode>,

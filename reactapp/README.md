@@ -1613,6 +1613,33 @@ export default TableComponentContextEvent;
 
 
     - Using Middlewares for Async Calls Management usign Redux Apps
+        - Saga
+            - Middleware for Async Operations through the action Creators
+        - saga
+            - the object model that offers the mechanism of creating genberators to stream or sequence the async operations and generating responses
+            - the Operator model thatb is used to manage the async operations and yield responses   
+            - npm install --save saga  
+        - redux-saga
+            - Bridge between Redux Object Model and Saga
+            - createSagaMiddleware()
+                - Run all generators thise are respomsible to perform all async operations
+            - redux-saga/effects
+                - The Effects is container that manages asynchronous operations
+                    - takeLatest()
+                        - function that is used to monitor an action that is dispatched from UI
+                        - The saga executs the action creator against the dispatched action and perform Async Operations
+                    - call()
+                        - function that is used to make call to HTTP Service  and subscribe to the Promise object  
+                    - put()
+                        - function, usd to dispatch an output action against the Promise status received from the call() function   
+                    - all()
+                        - function, that is used to aggrigate all saga generators and load them at root of the  application to monitor the action dispatched from UI      
+                - Sequest of execution
+                    - SAGA Middleware is loaded on Root level  aka application level
+                        - all() is continuously executing
+                            - UI Dispatch Action --> listened by saga using takeLatest() --> execute the action creator --> if action creator is doing an async call ---> call() function exeutes promise base class and returns promise subscription to midllware ---> put() will dispatch the output action based on promise returned and resolved by call() function --> output action will be listened by reducer and the store will be updated with new state received.
+                                            
+
 4. Testing of React Apps (Phase 4)
     - Component's Rendeing Testing using Data
     - Component's Event Dispatch Testing    
