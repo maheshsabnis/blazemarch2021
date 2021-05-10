@@ -1639,11 +1639,20 @@ export default TableComponentContextEvent;
                         - all() is continuously executing
                             - UI Dispatch Action --> listened by saga using takeLatest() --> execute the action creator --> if action creator is doing an async call ---> call() function exeutes promise base class and returns promise subscription to midllware ---> put() will dispatch the output action based on promise returned and resolved by call() function --> output action will be listened by reducer and the store will be updated with new state received.
                                             
-
+====================================================== End of Rect ============================================
+# Testing JavaScript Apps
 4. Testing of React Apps (Phase 4)
+    -  Enzyme, Jest and enzyme-adapter-react-16
     - Component's Rendeing Testing using Data
-    - Component's Event Dispatch Testing    
-5. Using Server-Side Rendering for React using Next.js (Phase 5)    
+        - Single COmponent Test
+    - Component's Event Dispatch Testing  
+        - Event Emission using Event Mocks
+5. Testing the Node.js Apps
+    - Mocha and Chai
+        - Framework for testing the Node.js Server-Side Apps
+        - Create an Auto-Subscriber to REST APIs and Test the Responses for GET /  POST / PUT and DELETE
+    - Test REST APIs     
+6. Using Server-Side Rendering for React using Next.js (Phase 5)    
 
 # Running the React Application
     - npm run start
@@ -1718,3 +1727,7 @@ export default TableComponentContextEvent;
         - E.g. Search All Employess by DeptName
         - Search All Employyes by Location
         - Search All Employees by Designation     
+
+# Date : 10-May-2021
+- USe the Redux SAGA Middlewares the eComm application to perform the CRUD Operations also serach operations as per requirements
+    - Search Products by Manufacturer / Seller / Description
