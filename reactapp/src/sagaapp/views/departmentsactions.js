@@ -11,7 +11,7 @@ export const DepartmentActionsomponent=(props)=>{
             <input type="button" value="Add Department" 
              className="btn btn-success"
               onClick={()=>props.addDept({
-                  DeptNo:901,DeptName:'Dept_901', Location: 'Pune', Capacity:8000
+                  DeptNo:902,DeptName:'Dept_902', Location: 'Pune', Capacity:8000
               })}/>
               <hr />
               <strong>

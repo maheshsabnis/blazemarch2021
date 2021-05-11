@@ -1642,17 +1642,117 @@ export default TableComponentContextEvent;
 ====================================================== End of Rect ============================================
 # Testing JavaScript Apps
 4. Testing of React Apps (Phase 4)
-    -  Enzyme, Jest and enzyme-adapter-react-16
+    - Unit Testing Flow with following steps
+        - Step 1: Initialize an Environment Settings those are commonly used across all test cases
+            - beforeEach(()=>{ Env. Initialization e.g. Global Variables, DOM COntainer Declarations, etc.})
+        - Step 2 Implement the Test Case
+            - it(()=>{  Write the Unite Test with following steps }) 
+                - Step 2.1: Arrange
+                    - Collect all depednencies used to execute test e.g. constants, instances of dependant classes, etc.
+                    - Also define an object that will represent an 'expected' value once the test is executed
+                Step 2.2: Act
+                    - Execute the Test and receive an 'actual' result 
+                - Step 2.3
+                    - Assertion
+                        - Compare the 'actual' result with 'expected' result based on expectaions
+                        - Expectations
+                            - equaal
+                            - notequal
+                            - has
+                            - toBe
+                            - greaterthan
+                            - lessthan
+                            - contains       
+                        - The test will be successful or fail based on result of expection
+        - Step 3:
+            - afterEach(()=>{  Clean all resources those are declared in beforEach method})        
+    -  Unit Test File naming conventions
+        - <COMPONENT>.test.js  
+        - <COMPONENT>.spec.js                  
+    - Enzyme, Jest and enzyme-adapter-react-16
+        - The 'Jest' is by-default used bt React App using React-CLI
+            - Headless DOM testing engine used to test the JS apps  out of the browser
+                - Install JEST in global scope
+                    - npm install -g jest
+                - Install it in Local Dev Env.
+                    - npm install --save-dev jest    
+    - react-dom/test-utils
+        - limit the react application for DOM Render Testing
+            - act
+                - a Test case Execution for 
+                    - Rendering
+                    - Mocking
+                    - Events
+    - react-dom, for testing
+        -  render() method
+            - Manage the 'In-Memory' rendering of the React Component
+        - unmountComponentAtNode(<CONTAINER-ELEMENT-THAT-CONTAIN-DOM-TREE-IN-MEMORY>)
+            - Make sure that once the test is successfully executed then unmount the component from memory   
+    - Jest +  react-dom/test-utils
+        - Provide React-Compnent rendering inside the Memory and test the component w/o browser                       
     - Component's Rendeing Testing using Data
-        - Single COmponent Test
+        - Single Component Test
+            - for rendering of the DOM
+        - Test the Component's Depednency
+            - Component is dependent on External Service Calls 
     - Component's Event Dispatch Testing  
         - Event Emission using Event Mocks
+        - TO make sure that the State / Props are logically tested as per the behavior requirements 
+    - If not using React-CLI for React Apps, the use the following packages for testing the react application
+        - Enzyme, enzyme-adapter-react-16 and Jest
+            - npm install --save-dev enzyme enzyme-adapter-react-16 jest 
+        - ENzyme
+            - shallow(<Component>)
+                - This will test only one Single COmponent that is passed to the shallow() method
+                - The shllow() is recommended for independenct component testing so that it make sure that the individual components are logically providing correct or accuract behavior 
+            - mount(<Compnent>)
+                - Like an integration test for Components
+                - Test <Component> alon with all of its children (aka child components)            
+        - TO use Enzyme for testing of the React COmponents in the 'src' folder add a new file and name it as 'enzyme.js' to define the teh adapter configurations        
+``` javascript
+// shallow: will render and mount the spcific component and test
+// it w/o its hildren
+// configure: used to attach or establish bridge between Enzyme and React  
+import Enzyme, { shallow, configure  } from "enzyme";
+// Adapter is an object that map enzyme with React DOM
+import Adapter from 'enzyme-adapter-react-16';
+// React + Enzyme Mapping
+configure({
+    adapter: new Adapter()
+});
+
+// export so that test file can import
+export {shallow};
+
+export default Enzyme;
+```
 5. Testing the Node.js Apps
     - Mocha and Chai
         - Framework for testing the Node.js Server-Side Apps
         - Create an Auto-Subscriber to REST APIs and Test the Responses for GET /  POST / PUT and DELETE
-    - Test REST APIs     
+    - Test REST APIs
+        - THis is an approach where the REST APIs are tested an an automation process i.e. w/o adding any UI and making use of REST CLients, e.g. ARC or Postman
+            - npm install -g mocha
+                - the global scope environment for managing the REST API request and responses from the test case    
+                - the applicaiton must contain all test files in 'test' folder so that the mocha can execute them
+            - npm install --save-dev mocha chai request
+                - the 'chai' is the assertion library to make sure that the actual response received from REST API match with expected response
+                - the 'request' the library that is used to make REST API calls for GET /POST, etc.
+                    - request(<URL-OF-REST-API>, callback)
+                        - callback(error, response,body)
+                            - error, the communication error or response fail error
+                            - response, the response headers for staus code,
+                            - body, the response body that contains result
+        - Writing the test case when testing REST APIs
+            - it('',(done)=>{
+                request(url, (error, response,body)=>{
+                    expect() aka Assertion
+                    done();
+                });
+            });
+            - done() the object that will complete the call and request for releasing resources used in REST Calls ot HTTP calls                          
 6. Using Server-Side Rendering for React using Next.js (Phase 5)    
+
 
 # Running the React Application
     - npm run start
@@ -1731,3 +1831,13 @@ export default TableComponentContextEvent;
 # Date : 10-May-2021
 - USe the Redux SAGA Middlewares the eComm application to perform the CRUD Operations also serach operations as per requirements
     - Search Products by Manufacturer / Seller / Description
+
+# Date: 11-May-2021
+
+- Write a test case and Unit test for the REST APIs for following operation verifications
+    - Make sure that all Read/Write operations are working succesfully with GET / POST / PUT / DELETE requests
+    - Make sure that methods from REST APIs are responding error when they are suppoed to return error messages     e.g. if login fails, 401, if validation failed then may be 500 or your custom code that you want return
+- Write a test case and unit test to test the Components those are used for performing CRUD operations, validating UI by state changes in validation results for validation summary. Makes sure that if you select eny reord from Table row and that row must be displayed in TExt Elements.    
+    - Please refer following receips
+    https://reactjs.org/docs/testing-recipes.html
+     

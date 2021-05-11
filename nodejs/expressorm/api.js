@@ -34,6 +34,22 @@ const sequelize = new Sequelize('Company', 'root', 'P@ssw0rd_',{
 // DataTypes are required for Data Validations and the COnstraints check 
 const deptModel = require(path.join(__dirname, './models/Department'))(sequelize,Sequelize.DataTypes);
 
+
+
+instance.use(
+    express.static(path.join(__dirname, './build/static'))
+);
+instance.use(
+    express.static(path.join(__dirname, './build/static'))
+);
+
+
+instance.get('/',(req,resp)=>{
+    resp.sendFile('index.html', {
+        root: path.join(__dirname, './')
+    });
+});
+
 // defining REST APIs
 instance.get('/api/departments',(req,resp)=>{
     sequelize.sync({force:false})

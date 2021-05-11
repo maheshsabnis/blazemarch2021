@@ -1,56 +1,47 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
- // import 'createStore()' and the middleware using 'applyMiddleware()' function, and the compose()
- // applyMiddleare() will be used to load the middleware in store
- // compose(), the method that will implement the parameter enhancer tio enhance the createStore() 
- // using REDUX_DEV_TOOLS and middleware
- import { createStore, applyMiddleware, compose } from "redux";
-// import the sagaMiddleware object using createSagaMinndeware
-
-import createSagaMinndeware from 'redux-saga';
-
-
- // import Provider
-
- import { Provider } from "react-redux";
+import {BrowserRouter} from 'react-router-dom';
 
 import './index.css';
 // imporing bootstrap CSS Library
 import './../node_modules/bootstrap/dist/css/bootstrap.min.css';
+// import App from './App';
+import FirstSimpleComponent from './components/StatelessComponent/firstSimpleComponen';
 
-// import reducer
-import reducer from "./sagaapp/reducers/index";
-
-// import the saga generator function
-import rootSaga from './sagaapp/sagas/index';
- 
+import MessageComponent from './components/StatefullComponents/messageComponent';
 import reportWebVitals from './reportWebVitals';
-// importing the saga component
-import MainSagaComponent from './sagaapp/mainsagacomponent';
+import BasicCalculatorComponent from './components/BasicCalculator/basicCalculatorComponent';
+import ProductComponent from './components/productcomponent/productComponent';
+import LifecycleComponent from './components/LifecycleeHooks/ConditionalComponents/MouseMoveComponent';
+import DepartmentRESTComponent from './components/LifecycleeHooks/callRESTComponent/departmentRESTComponent';
+import ContainerComponent from './components/LifecycleeHooks/ErrorHandlingCompoents/ErrorConditionComponent';
+import ContainerForErrorBoundryComponent from './components/LifecycleeHooks/ErrorHandlingCompoents/ErrorBoundryComponent';
+import ValidationFormComponent from './components/validations/ValidationComponent';
+import SecureAccessComponent from './components/LifecycleeHooks/callRESTComponent/secureaccesscomponent';
+import SimpleFuncationalComponent from './hooks/simplefunctionalComponent';
+import SimpleCalculatorComponent from './hooks/statehook/simplecalculator';
+import DepartmentHookComponent from './hooks/statehook/departmentHookComponent';
+import ToggleCompoent from './hooks/useEffectApp/TooggleComponent';
+import LazyComponent from './hooks/lazyload';
+import CustomHookComponet from './hooks/customhooks/customHookComponent';
+import ImportingComponent from './hooks/codesplitting/SimpleCompoent/importingComponent';
+import LazyLoadingComponent from './hooks/codesplitting/UsingComponents/LazyLoadingComponent';
+import MainContainerComponent from './routingapp/maincontainercomponent';
+import HelloTestComponent from './componentfortest/HelloTestComponent';
+import EventComponent from './componentfortest/EventComponent';
+import ListNamesComponent from './componentfortest/ListNamesComponent';
+let message = 'This is the Message from the Parent';
 
-// initialize the sala middleware
+let newmessage = 'This is the New Message from the Parent';
 
-const sagaMiddleware = createSagaMinndeware();
-
-// create a parameter enhancer object
-// the mandatory object specified as  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-// compose represents any othe additional parameter to be pased to the createStore() e.g. middleware 
-const parameterEnhancer =  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-// create a store using reducer and Saga Middleware
-let store = createStore(reducer, parameterEnhancer(applyMiddleware(sagaMiddleware)));
- 
-// modify the sagaMiddlere object with its 'run()' method to keep running the rootSaga
-sagaMiddleware.run(rootSaga);
-
+// the render() method of the ReactDOM will mount the component
+// in HTML element with id as 'root'
 ReactDOM.render(
   <React.StrictMode>
-    {/* the Redux COntext with middleware is created with store to manage the react-redux execution for all react components those are using dispatch, store connect using selector, etc*/}
-    <Provider store={store}>
-       <MainSagaComponent></MainSagaComponent>
-    </Provider>
-    
+    <BrowserRouter>
+      <MainContainerComponent></MainContainerComponent>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
