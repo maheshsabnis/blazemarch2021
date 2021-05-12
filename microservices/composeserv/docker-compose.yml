@@ -1,0 +1,13 @@
+version: "3.9"
+
+# define services to be used as microservice
+
+services: 
+  customerservice: # name  of the service
+    build: customerserv # the folder that contains the dockerfile
+    ports: # port mapping Host-Port:Container-Port
+      - "7091:7091"
+  productservice:
+    build: productserv
+    ports: 
+      - "7092:7092"               
