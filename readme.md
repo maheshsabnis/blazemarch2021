@@ -1,0 +1,74 @@
+# Cloud, Amazon Web Services (AWS)
+1. Globally distributable, high-available, high-scalable environment for the applications
+    - Deployment
+        - Infrastructure
+            - Virtual Machines
+                - EC2 Instances to deploy the application
+                - Individual Application Deployment
+                    - Lift and Shift
+                        - Take from On-Premises and Deploy on Cloud
+            - Networks
+                - Defining the Virtual Networks to Communicate across the Services
+                    - All runnuing in EC2 is accesseding Storage 
+            - Security Groups
+                - Rule Sets to Manage the Access-policies from Various IPs across the globe like following
+                    - Http on port 80
+                    - Https on port 443
+                    - Custom Protocol Configuration
+                        - Custom Port to be exposed from the App for Accessinng App resources
+            - IP Addresses
+                - Fix Address if the app is internally or externally accessed from other service on AWS or from externally hosted apps
+        - Services for Deployment
+            - Amplify
+                - Service used to host the Server App and Client Apps from the CI/CD pipeline
+                    - GitHub
+                    - GitLab
+                    - BitBucket
+                    - Any other DevOps
+            - BeanStack
+                - A publish service that can be used for directly publishing services from your desktop to the AWS (AWS SDK for Publish must be installed on your machine)
+        - Cluster Services
+            - Elastic Container Registry (ECR)
+                - Docker Images REgistry provided by AWS
+                - Push the Docker Images from your machine to ECR and use thse images for Deployment
+            - Elastic Kubernetes Services (EKS)
+                - This is a Kubernetes Cluster Environment provided by AWS for Managing Microservices based Apps
+                - Offering
+                    - Auto-Deployment
+                    - LoadBalancer
+                    - IP Addresses
+                    - Security Groups
+                        - If the Service needs custom port then add it explicitely
+                - CloudFormation Service
+                    - Provides Template to create a cluster (Frequently user service on AWS)        
+        - Serverless    
+            - AWS Lambda
+                - Serverless feature to deploy the microservices / only REST APIs
+                - This can be used for Background operations also      
+    - Storing Data
+        - RDS
+            - MySql, Postgres, MS-SQL, etc.
+        - DynamoDB
+            - NoQL Database Service on AWS
+            - Used for SToring Huge-Volume of data   
+            - Table
+                - A Collection of the Documents aka JSON Documents
+                - Used Frequently for storing data that is used for 
+                    - Analytics
+                    - Machine Learning
+                    - AI
+            - To access the Storage Services from the client app, the client app must authenticate itself against the service
+                - access the Access Key ID and Secret from the IAM role              
+    - Security
+        - IAM Role
+            - Configure the Access of the AWS Resources from the application
+            - Used to have a seamless integration across the various deplopyment Platforms on AWS for the application
+                - GitLab CI/CD integration with AWS Roles to deploy app on EKS
+                    - e.g. EKS Role accessible to GitLab CI/CD pieline 
+    - Other Services
+        - CloudWatch
+            - Across Srevices Monitor for 
+                - Uptime
+                - HTTP Communication
+                - Resources Utilization
+                - Security Log                

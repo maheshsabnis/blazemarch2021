@@ -1,0 +1,17 @@
+{
+  "name": "dynamonode",
+  "version": "1.0.0",
+  "description": "1. The aws-sdk     - The package used to provide an access of all AWS services in JavaScript Applications     - npm install --save aws-sdk",
+  "main": "operations.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node restapi.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.906.0",
+    "express": "^4.17.1"
+  }
+}
