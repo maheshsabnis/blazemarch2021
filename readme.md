@@ -45,6 +45,13 @@
             - AWS Lambda
                 - Serverless feature to deploy the microservices / only REST APIs
                 - This can be used for Background operations also      
+                - Features
+                    - Run the code w/o provisining the serverand the workload aware cluster
+                    - Lambda offers the application code execution virtually with any type of backend server application with zero administration(?)
+                        - This gives relief from creating VM, Security Grouops, selectcing server env, App deployment, expostings IPs
+                        - Upload the ZIP file (containing app package) to the Lambda
+                        - Lambda will take responsiblity of allocation compute execution power to run the applciaiton.
+                        - This will manage the scaling of traffic automatically 
     - Storing Data
         - RDS
             - MySql, Postgres, MS-SQL, etc.
@@ -72,3 +79,40 @@
                 - HTTP Communication
                 - Resources Utilization
                 - Security Log                
+
+# Modern Mission Critical Application Dev and Deployment facts
+- Development Needs
+1. There are frequent updates in app
+2. The feature additions is a normal practice 
+- Deployments Needs
+3. The updates and features must be smoothly integrated in app and deployed seamlessly
+4. The App must be deployed for High Availability and Scalability with auto-failure recovery
+
+- for point no 3 and 4, the platform for deployment must be enable for
+    - Continuous Develivery and Contineous Integartion (CI/CD)
+    - The plotform MUST provide relief from
+        - Creating VM with Hardware and Software Configuration
+        - The Auto-Failure Recovery must be the default feature
+- Kubernetes is an Answer for all the requirements by Google and then they denoted it to the Community
+    - Provides following services
+        - Cluster Management using 'Node'
+            - Node is Virtual Machine
+        - Each Node contains Pods
+            - Each Pod is a container for the Docker Image to run in it
+        - The Auto-Load balancer is provided but it can be configured
+        - Auto-Failure Recovery
+            - If a Pod in Node is crashed the load is auto shifted to other Pod in same node
+            - If Node crash, the other instance is arranged to make sure that the app is high available
+        - Netwok Access Topoligies
+            - Allows to define Portsnand communication across Nodes and Pods
+            - This manages IP subnets to that there are internal and external IPs are configured
+                - internal IP, this is used for Communication across Pods and Nodes
+                - external IP, this is used for out-side communciation through the loadbalancer  
+    - With EKS the Instance managtement service
+        - Auto-Extends Nodes if a node is down aka Auto-Calsing Service
+        - Generaly these nodes are Amazon VM wtih Linux
+        - Cost is dependant on the VM
+        - The Network Security Group must be managed by the deployment Team
+            - used for providing an access of the Service deployed on POD tom outside world               
+
+
