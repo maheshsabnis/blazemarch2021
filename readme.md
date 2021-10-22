@@ -1,0 +1,118 @@
+# Cloud, Amazon Web Services (AWS)
+1. Globally distributable, high-available, high-scalable environment for the applications
+    - Deployment
+        - Infrastructure
+            - Virtual Machines
+                - EC2 Instances to deploy the application
+                - Individual Application Deployment
+                    - Lift and Shift
+                        - Take from On-Premises and Deploy on Cloud
+            - Networks
+                - Defining the Virtual Networks to Communicate across the Services
+                    - All runnuing in EC2 is accesseding Storage 
+            - Security Groups
+                - Rule Sets to Manage the Access-policies from Various IPs across the globe like following
+                    - Http on port 80
+                    - Https on port 443
+                    - Custom Protocol Configuration
+                        - Custom Port to be exposed from the App for Accessinng App resources
+            - IP Addresses
+                - Fix Address if the app is internally or externally accessed from other service on AWS or from externally hosted apps
+        - Services for Deployment
+            - Amplify
+                - Service used to host the Server App and Client Apps from the CI/CD pipeline
+                    - GitHub
+                    - GitLab
+                    - BitBucket
+                    - Any other DevOps
+            - BeanStack
+                - A publish service that can be used for directly publishing services from your desktop to the AWS (AWS SDK for Publish must be installed on your machine)
+        - Cluster Services
+            - Elastic Container Registry (ECR)
+                - Docker Images REgistry provided by AWS
+                - Push the Docker Images from your machine to ECR and use thse images for Deployment
+            - Elastic Kubernetes Services (EKS)
+                - This is a Kubernetes Cluster Environment provided by AWS for Managing Microservices based Apps
+                - Offering
+                    - Auto-Deployment
+                    - LoadBalancer
+                    - IP Addresses
+                    - Security Groups
+                        - If the Service needs custom port then add it explicitely
+                - CloudFormation Service
+                    - Provides Template to create a cluster (Frequently user service on AWS)        
+        - Serverless    
+            - AWS Lambda
+                - Serverless feature to deploy the microservices / only REST APIs
+                - This can be used for Background operations also      
+                - Features
+                    - Run the code w/o provisining the serverand the workload aware cluster
+                    - Lambda offers the application code execution virtually with any type of backend server application with zero administration(?)
+                        - This gives relief from creating VM, Security Grouops, selectcing server env, App deployment, expostings IPs
+                        - Upload the ZIP file (containing app package) to the Lambda
+                        - Lambda will take responsiblity of allocation compute execution power to run the applciaiton.
+                        - This will manage the scaling of traffic automatically 
+    - Storing Data
+        - RDS
+            - MySql, Postgres, MS-SQL, etc.
+        - DynamoDB
+            - NoQL Database Service on AWS
+            - Used for SToring Huge-Volume of data   
+            - Table
+                - A Collection of the Documents aka JSON Documents
+                - Used Frequently for storing data that is used for 
+                    - Analytics
+                    - Machine Learning
+                    - AI
+            - To access the Storage Services from the client app, the client app must authenticate itself against the service
+                - access the Access Key ID and Secret from the IAM role              
+    - Security
+        - IAM Role
+            - Configure the Access of the AWS Resources from the application
+            - Used to have a seamless integration across the various deplopyment Platforms on AWS for the application
+                - GitLab CI/CD integration with AWS Roles to deploy app on EKS
+                    - e.g. EKS Role accessible to GitLab CI/CD pieline 
+    - Other Services
+        - CloudWatch
+            - Across Srevices Monitor for 
+                - Uptime
+                - HTTP Communication
+                - Resources Utilization
+                - Security Log                
+
+# Modern Mission Critical Application Dev and Deployment facts
+- Development Needs
+1. There are frequent updates in app
+2. The feature additions is a normal practice 
+- Deployments Needs
+3. The updates and features must be smoothly integrated in app and deployed seamlessly
+4. The App must be deployed for High Availability and Scalability with auto-failure recovery
+
+- for point no 3 and 4, the platform for deployment must be enable for
+    - Continuous Develivery and Contineous Integartion (CI/CD)
+    - The plotform MUST provide relief from
+        - Creating VM with Hardware and Software Configuration
+        - The Auto-Failure Recovery must be the default feature
+- Kubernetes is an Answer for all the requirements by Google and then they denoted it to the Community
+    - Provides following services
+        - Cluster Management using 'Node'
+            - Node is Virtual Machine
+        - Each Node contains Pods
+            - Each Pod is a container for the Docker Image to run in it
+        - The Auto-Load balancer is provided but it can be configured
+        - Auto-Failure Recovery
+            - If a Pod in Node is crashed the load is auto shifted to other Pod in same node
+            - If Node crash, the other instance is arranged to make sure that the app is high available
+        - Netwok Access Topoligies
+            - Allows to define Portsnand communication across Nodes and Pods
+            - This manages IP subnets to that there are internal and external IPs are configured
+                - internal IP, this is used for Communication across Pods and Nodes
+                - external IP, this is used for out-side communciation through the loadbalancer  
+    - With EKS the Instance managtement service
+        - Auto-Extends Nodes if a node is down aka Auto-Calsing Service
+        - Generaly these nodes are Amazon VM wtih Linux
+        - Cost is dependant on the VM
+        - The Network Security Group must be managed by the deployment Team
+            - used for providing an access of the Service deployed on POD tom outside world               
+
+

@@ -1,0 +1,18 @@
+/* defining variables for style values */
+@import "base";
+$bgColor: red;
+$textColor: yellow;
+$fontSize: 30px;
+$height: 100px;
+
+body {
+    background-color: $bgColor;
+    color: $textColor;
+    font-size: $fontSize;
+}
+input {
+    background-color: $bgColor;
+    color: $textColor;
+    font-size: $fontSize;
+    height:$height;
+}

@@ -1,0 +1,22 @@
+[
+    {
+        "DeptName":"IT",
+        "EmpNo":"Emp-001",
+        "EmpName":"Mahesh"
+    },
+    {
+        "DeptName":"HR",
+        "EmpNo":"Emp-002",
+        "EmpName":"Ajay"
+    },
+    {
+        "DeptName":"IT",
+        "EmpNo":"Emp-003",
+        "EmpName":"Kumar"
+    },
+    {
+        "DeptName":"HR",
+        "EmpNo":"Emp-004",
+        "EmpName":"Vishal"
+    }
+]

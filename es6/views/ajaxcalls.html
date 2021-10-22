@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./../build/promiseajax.build.js"></script>
+    <script>
+        window.onload = function(){
+       /*     getData().then((response)=>{
+                document.getElementById('dv').innerHTML = 'Revedved data ' + JSON.stringify(response);
+            }).catch((error)=>{
+                document.getElementById('dv').innerHTML = 'Revedved data ' + error;
+            }); */
+
+         let result= getProducts();   
+         document.getElementById('dv').innerHTML = 'Revedved data ' + JSON.stringify(result);
+
+
+
+
+            let prd = {
+                ProductId:'Prd6001',
+                ProductName: 'Mouse',
+                CategoryName: 'Electronics',
+                Manufacturer:'IBM',
+                Description:'Optical Mouse',
+                BasePrice:2300
+            };
+           
+
+
+           /* postData(prd).then((response)=>{
+                document.getElementById('dv').innerHTML = 'Revedved data ' + JSON.stringify(response);
+            }).catch((error)=>{
+                document.getElementById('dv').innerHTML = 'Revedved data ' + error;
+            }); */
+        }
+    </script>
+</head>
+<body>
+    <h1>DEMO AJAX</h1>
+    <div id="dv"></div>
+</body>
+</html>

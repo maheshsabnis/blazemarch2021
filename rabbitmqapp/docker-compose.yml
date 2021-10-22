@@ -1,0 +1,20 @@
+version: "3.9"
+
+# define services to be used as microservice
+
+services: 
+  senderservice: # name  of the service
+    build: senderapp # the folder that contains the dockerfile
+    ports: # port mapping Host-Port:Container-Port
+      - "8091:8091"
+    depends_on: # the senderservice is dependant on the rabbitmq
+      - rabbitmq             
+  rabbitmq:
+    container_name: emessage-rabbit
+    ports:
+        - 5672:5672
+        - 15672:15672
+    environment:
+        - RABBITMQ_DEFAULT_USER=guest
+        - RABBITMQ_DEFAULT_PASS=guest
+    image: rabbitmq:3-management
